@@ -14,11 +14,11 @@ require('swagger-ui/dist/lib/handlebars-4.0.5.js');
 require('swagger-ui/dist/lib/lodash.min.js');
 require('swagger-ui/dist/lib/backbone-min.js');
 require('swagger-ui/dist/swagger-ui.js');
+/* global SwaggerUi */
 require('swagger-ui/dist/lib/highlight.9.1.0.pack.js');
 require('swagger-ui/dist/lib/highlight.9.1.0.pack_extended.js');
 require('swagger-ui/dist/lib/jsoneditor.min.js');
 require('swagger-ui/dist/lib/marked.js');
 require('swagger-ui/dist/lib/swagger-oauth.js');
 
-/* global SwaggerUi */
 export default SwaggerUi;
