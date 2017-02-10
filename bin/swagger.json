@@ -1,0 +1,90 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Demo AWS4 API",
+        "description": "A demonstration of an API using AWS4 authorization",
+        "version": "0.0.1"
+    },
+    "host": "localhost:9000",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/api",
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "basic": {
+            "type": "basic",
+            "description": "Basic HTTP authentication"
+        },
+        "aws4": {
+            "type": "x-aws4",
+            "description": "AWS4 signature authentication",
+            "x-in": "header",
+            "x-service": "demo"
+        }
+    },
+    "paths": {
+        "/account": {
+            "get": {
+                "summary": "Account Information",
+                "description": "Retrieve account information for the currently logged-in account.\n",
+                "security": [
+                    {
+                        "basic": []
+                    },
+                    {
+                        "aws4": []
+                    }
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account information",
+                        "schema": {
+                            "$ref": "#/definitions/Account"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Account": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "User name"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
