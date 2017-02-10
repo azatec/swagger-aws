@@ -61,6 +61,10 @@ module.exports = {
 
   entry: {
     app: './index.js',
+    vendor: [
+      'aws4',
+      './swagger-ui-lib',
+    ],
   },
   output: {
     path: distPath,
