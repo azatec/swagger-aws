@@ -62,8 +62,19 @@ module.exports = {
   entry: {
     app: './index.js',
     vendor: [
-      'aws4',
+      /* Special-case: `swagger-ui` doesn't pull in all it dependenciees, those
+       * are only 'listed' in `swagger-ui-lib`, so making sure we ensure that
+       * one
+       */
       './swagger-ui-lib',
+      'aws4',
+      'backbone',
+      'handlebars',
+      'highlight.js',
+      'jquery',
+      'querystring-browser',
+      'sanitize-html',
+      'swagger-ui',
     ],
   },
   output: {
@@ -123,7 +134,12 @@ module.exports = {
 
   resolve: {
     alias: {
+      backbone: 'swagger-ui/dist/lib/backbone-min.js',
+      handlebars: 'swagger-ui/dist/lib/handlebars-4.0.5.js',
+      'highlight.js': 'swagger-ui/dist/lib/highlight.9.1.0.pack.js',
+      jquery: 'swagger-ui/dist/lib/jquery-1.8.0.min.js',
       querystring: 'querystring-browser',
+      'sanitize-html': 'swagger-ui/dist/lib/sanitize-html.min.js',
     },
   },
 };

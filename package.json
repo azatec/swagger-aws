@@ -52,7 +52,12 @@
   "homepage": "https://github.com/Scality/swagger-ui-aws#readme",
   "dependencies": {
     "aws4": "^1.6.0",
+    "backbone": "1.1.2",
+    "handlebars": "4.0.5",
+    "highlight.js": "9.1.0",
+    "jquery": "1.8.2",
     "querystring-browser": "^1.0.4",
+    "sanitize-html": "1.11.4",
     "swagger-ui": "2.2.10"
   },
   "devDependencies": {
@@ -71,7 +76,6 @@
     "express": "^4.14.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "file-loader": "^0.10.0",
-    "handlebars": "^4.0.6",
     "handlebars-loader": "^1.4.0",
     "html-webpack-plugin": "^2.28.0",
     "html-webpack-template": "^6.0.1",

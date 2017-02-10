@@ -1,6 +1,6 @@
-require('swagger-ui/dist/lib/handlebars-4.0.5.js');
+import 'handlebars';
 /* global Handlebars */
-require('swagger-ui/dist/lib/sanitize-html.min.js');
+import 'sanitize-html';
 /* global sanitizeHtml */
 
 /* Taken (and ES2015'ed) from SwaggerUI */

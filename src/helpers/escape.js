@@ -1,4 +1,4 @@
-require('swagger-ui/dist/lib/handlebars-4.0.5.js');
+import 'handlebars';
 /* global Handlebars */
 
 export default function escape(value) {

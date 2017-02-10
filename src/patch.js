@@ -1,12 +1,12 @@
+import 'jquery';
+/* global $ */
+import 'backbone';
+/* global Backbone */
+
 import { sign } from 'aws4';
 
 import SwaggerUi from './swagger-ui-lib';
 import AWS4AuthTemplate from './aws4_auth.handlebars';
-
-require('swagger-ui/dist/lib/jquery-1.8.0.min.js');
-/* global $ */
-require('swagger-ui/dist/lib/backbone-min.js');
-/* global Backbone */
 
 function AWS4Authorization(service, type, keyId, key) {
   if (type !== 'header') {
