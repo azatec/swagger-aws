@@ -12,12 +12,7 @@ function main() {
       logo,
     }));
 
-  let url = window.location.search.match(/url=([^&]+)/);
-  if (url && url.length > 1) {
-    url = decodeURIComponent(url[1]);
-  } else {
-    url = 'http://petstore.swagger.io/v2/swagger.json';
-  }
+  const url = `http://${window.location.hostname}:9000/api/swagger.json`;
 
   /* global hljs */
   hljs.configure({
@@ -28,7 +23,7 @@ function main() {
     url,
     dom_id: 'swagger-ui-container',
     supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-    docExpansion: 'none',
+    docExpansion: 'full',
     jsonEditor: false,
     defaultModelRendering: 'schema',
     showRequestHeaders: false,
