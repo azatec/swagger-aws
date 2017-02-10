@@ -3,9 +3,12 @@
 import logo from 'swagger-ui/dist/images/logo_small.png';
 
 import SwaggerUi from './swagger-ui-lib';
+import patch from './patch';
 import Chrome from './chrome.handlebars';
 
 function main() {
+  patch();
+
   $('body')
     .addClass('swagger-section')
     .append(Chrome({

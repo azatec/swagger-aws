@@ -51,6 +51,8 @@
   },
   "homepage": "https://github.com/Scality/swagger-ui-aws#readme",
   "dependencies": {
+    "aws4": "^1.6.0",
+    "querystring-browser": "^1.0.4",
     "swagger-ui": "2.2.10"
   },
   "devDependencies": {

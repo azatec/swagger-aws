@@ -105,12 +105,21 @@ module.exports = {
       },
       {
         test: /\.handlebars$/,
-        loaders: [
-          'handlebars-loader',
-        ],
+        loader: 'handlebars-loader',
+        query: {
+          helperDirs: [
+            path.resolve(srcPath, 'helpers'),
+          ],
+        },
       },
     ],
   },
 
   plugins: isProduction ? productionPlugins : developmentPlugins,
+
+  resolve: {
+    alias: {
+      querystring: 'querystring-browser',
+    },
+  },
 };
