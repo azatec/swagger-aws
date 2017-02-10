@@ -8,7 +8,7 @@
     "build": "better-npm-run build",
     "start": "better-npm-run start",
     "lint": "better-npm-run lint",
-    "clean": "rimraf htdocs",
+    "clean": "rimraf dist",
     "serve": "node bin/server.js"
   },
   "betterScripts": {

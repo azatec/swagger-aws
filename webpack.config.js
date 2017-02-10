@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTemplate = require('html-webpack-template');
 
 const srcPath = path.resolve(__dirname, 'src');
-const distPath = path.resolve(__dirname, 'htdocs');
+const distPath = path.resolve(__dirname, 'dist');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
