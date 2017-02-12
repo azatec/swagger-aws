@@ -62,7 +62,7 @@ module.exports = {
   entry: {
     app: './index.js',
     vendor: [
-      /* Special-case: `swagger-ui` doesn't pull in all it dependenciees, those
+      /* Special-case: `swagger-ui` doesn't pull in all it dependencies, those
        * are only 'listed' in `swagger-ui-lib`, so making sure we ensure that
        * one
        */
