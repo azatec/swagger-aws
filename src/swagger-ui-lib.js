@@ -19,7 +19,7 @@ require('swagger-ui/lib/jsoneditor.min.js');
 require('swagger-ui/lib/marked.js');
 require('swagger-ui/lib/swagger-oauth.js');
 
-require('swagger-ui/dist/swagger-ui.js');
+require('swagger-ui/dist/swagger-ui.min.js');
 /* global SwaggerUi */
 
 export default SwaggerUi;

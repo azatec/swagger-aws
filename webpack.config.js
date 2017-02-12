@@ -76,7 +76,6 @@ module.exports = {
       'jquery',
       'querystring-browser',
       'sanitize-html',
-      'swagger-ui',
     ],
   },
   output: {
