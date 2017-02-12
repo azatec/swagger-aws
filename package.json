@@ -53,11 +53,13 @@
   "dependencies": {
     "aws4": "^1.6.0",
     "backbone": "1.1.2",
+    "es5-shim": "^4.5.9",
     "handlebars": "4.0.5",
     "highlight.js": "9.1.0",
     "jquery": "1.8.2",
     "querystring-browser": "^1.0.4",
     "sanitize-html": "1.11.4",
+    "swagger-client": "2.1.29",
     "swagger-ui": "2.2.10"
   },
   "devDependencies": {
@@ -79,6 +81,7 @@
     "handlebars-loader": "^1.4.0",
     "html-webpack-plugin": "^2.28.0",
     "html-webpack-template": "^6.0.1",
+    "imports-loader": "^0.7.0",
     "rimraf": "^2.5.4",
     "script-loader": "^0.7.0",
     "style-loader": "^0.13.1",

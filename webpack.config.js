@@ -101,9 +101,18 @@ module.exports = {
         ],
       },
       {
-        test: /node_modules\/swagger-ui\/(lib|dist)\/.*\.js$/,
+        test: /node_modules\/swagger-ui\/lib\/.*\.js$/,
         loaders: [
           'script-loader',
+        ],
+      },
+      {
+        test: /node_modules\/swagger-ui\/src\/main\/javascript\/.*\.js$/,
+        loaders: [
+          /* Note: `sanitizeHtml` is provided globally due to the bundling of
+           * the `lib` version, which is `script-loader`'d
+           */
+          'imports-loader?SwaggerClient=swagger-client',
         ],
       },
       {
@@ -141,6 +150,7 @@ module.exports = {
 
   resolve: {
     alias: {
+      b: path.resolve(srcPath, 'b.js'), // See `src/b.js`
       backbone: 'swagger-ui/lib/backbone-min.js',
       handlebars: 'swagger-ui/lib/handlebars-4.0.5.js',
       'highlight.js': 'swagger-ui/lib/highlight.9.1.0.pack.js',
