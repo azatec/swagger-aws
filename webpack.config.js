@@ -109,12 +109,12 @@ module.exports = {
       {
         test: /node_modules\/swagger-ui\/src\/main\/.*\.js$/,
         loaders: [
-          'imports-loader?' + [
+          `imports-loader?${[
             'SwaggerClient=swagger-client',
             'sanitizeHtml=sanitize-html',
             'Handlebars=handlebars/runtime',
             'marked=marked',
-          ].join('&'),
+          ].join('&')}`
         ],
       },
       {

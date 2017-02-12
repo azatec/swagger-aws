@@ -14,7 +14,8 @@ require('swagger-ui/lib/lodash.min.js');
 require('swagger-ui/lib/backbone-min.js');
 require('swagger-ui/lib/highlight.9.1.0.pack.js');
 require('swagger-ui/lib/highlight.9.1.0.pack_extended.js');
-require('swagger-ui/lib/jsoneditor.min.js');
+/* `JSONEditor` gets attached to `window`, not a proper module. Bleh. */
+require('json-editor');
 require('swagger-ui/lib/swagger-oauth.js');
 
 require('swagger-ui/src/main/template/templates.js');
