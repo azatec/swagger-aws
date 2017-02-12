@@ -71,7 +71,7 @@ module.exports = {
       './swagger-ui-lib',
       'aws4',
       'backbone',
-      'handlebars',
+      'handlebars/runtime',
       'highlight.js',
       'jquery',
       'querystring-browser',
@@ -107,9 +107,13 @@ module.exports = {
         ],
       },
       {
-        test: /node_modules\/swagger-ui\/src\/main\/javascript\/.*\.js$/,
+        test: /node_modules\/swagger-ui\/src\/main\/.*\.js$/,
         loaders: [
-          'imports-loader?SwaggerClient=swagger-client&sanitizeHtml=sanitize-html',
+          'imports-loader?' + [
+            'SwaggerClient=swagger-client',
+            'sanitizeHtml=sanitize-html',
+            'Handlebars=handlebars/runtime',
+          ].join('&'),
         ],
       },
       {
@@ -149,7 +153,6 @@ module.exports = {
     alias: {
       b: path.resolve(srcPath, 'b.js'), // See `src/b.js`
       backbone: 'swagger-ui/lib/backbone-min.js',
-      handlebars: 'swagger-ui/lib/handlebars-4.0.5.js',
       'highlight.js': 'swagger-ui/lib/highlight.9.1.0.pack.js',
       jquery: 'swagger-ui/lib/jquery-1.8.0.min.js',
       querystring: 'querystring-browser',

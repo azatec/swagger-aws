@@ -10,7 +10,6 @@ require('swagger-ui/lib/jquery-1.8.0.min.js');
 require('swagger-ui/lib/jquery.slideto.min.js');
 require('swagger-ui/lib/jquery.wiggle.min.js');
 require('swagger-ui/lib/jquery.ba-bbq.min.js');
-require('swagger-ui/lib/handlebars-4.0.5.js');
 require('swagger-ui/lib/lodash.min.js');
 require('swagger-ui/lib/backbone-min.js');
 require('swagger-ui/lib/highlight.9.1.0.pack.js');

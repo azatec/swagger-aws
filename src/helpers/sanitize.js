@@ -1,5 +1,4 @@
-import 'handlebars';
-/* global Handlebars */
+import Handlebars from 'handlebars/runtime';
 import sanitizeHtml from 'sanitize-html';
 
 /* Taken (and ES2015'ed) from SwaggerUI */
