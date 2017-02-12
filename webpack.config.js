@@ -5,6 +5,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTemplate = require('html-webpack-template');
+const Visualizer = require('webpack-visualizer-plugin');
 
 const srcPath = path.resolve(__dirname, 'src');
 const distPath = path.resolve(__dirname, 'dist');
@@ -54,6 +55,7 @@ const productionPlugins = [
 const developmentPlugins = [
   ...commonPlugins,
   new webpack.HotModuleReplacementPlugin(),
+  new Visualizer(),
 ];
 
 module.exports = {
