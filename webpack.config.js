@@ -113,6 +113,7 @@ module.exports = {
             'SwaggerClient=swagger-client',
             'sanitizeHtml=sanitize-html',
             'Handlebars=handlebars/runtime',
+            'marked=marked',
           ].join('&'),
         ],
       },
