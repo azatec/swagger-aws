@@ -114,7 +114,7 @@ module.exports = {
             'sanitizeHtml=sanitize-html',
             'Handlebars=handlebars/runtime',
             'marked=marked',
-          ].join('&')}`
+          ].join('&')}`,
         ],
       },
       {
