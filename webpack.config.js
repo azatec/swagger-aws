@@ -109,10 +109,7 @@ module.exports = {
       {
         test: /node_modules\/swagger-ui\/src\/main\/javascript\/.*\.js$/,
         loaders: [
-          /* Note: `sanitizeHtml` is provided globally due to the bundling of
-           * the `lib` version, which is `script-loader`'d
-           */
-          'imports-loader?SwaggerClient=swagger-client',
+          'imports-loader?SwaggerClient=swagger-client&sanitizeHtml=sanitize-html',
         ],
       },
       {
@@ -156,7 +153,6 @@ module.exports = {
       'highlight.js': 'swagger-ui/lib/highlight.9.1.0.pack.js',
       jquery: 'swagger-ui/lib/jquery-1.8.0.min.js',
       querystring: 'querystring-browser',
-      'sanitize-html': 'swagger-ui/lib/sanitize-html.min.js',
     },
   },
 };

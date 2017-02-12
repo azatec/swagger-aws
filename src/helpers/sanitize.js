@@ -1,7 +1,6 @@
 import 'handlebars';
 /* global Handlebars */
-import 'sanitize-html';
-/* global sanitizeHtml */
+import sanitizeHtml from 'sanitize-html';
 
 /* Taken (and ES2015'ed) from SwaggerUI */
 export default function sanitize(text) {
