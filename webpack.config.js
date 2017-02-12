@@ -100,7 +100,7 @@ module.exports = {
         ],
       },
       {
-        test: /node_modules\/swagger-ui\/dist\/.*\.js$/,
+        test: /node_modules\/swagger-ui\/(lib|dist)\/.*\.js$/,
         loaders: [
           'script-loader',
         ],
@@ -119,6 +119,12 @@ module.exports = {
         ],
       },
       {
+        test: /\.ttf$/,
+        loaders: [
+          'file-loader',
+        ],
+      },
+      {
         test: /\.handlebars$/,
         loader: 'handlebars-loader',
         query: {
@@ -134,12 +140,12 @@ module.exports = {
 
   resolve: {
     alias: {
-      backbone: 'swagger-ui/dist/lib/backbone-min.js',
-      handlebars: 'swagger-ui/dist/lib/handlebars-4.0.5.js',
-      'highlight.js': 'swagger-ui/dist/lib/highlight.9.1.0.pack.js',
-      jquery: 'swagger-ui/dist/lib/jquery-1.8.0.min.js',
+      backbone: 'swagger-ui/lib/backbone-min.js',
+      handlebars: 'swagger-ui/lib/handlebars-4.0.5.js',
+      'highlight.js': 'swagger-ui/lib/highlight.9.1.0.pack.js',
+      jquery: 'swagger-ui/lib/jquery-1.8.0.min.js',
       querystring: 'querystring-browser',
-      'sanitize-html': 'swagger-ui/dist/lib/sanitize-html.min.js',
+      'sanitize-html': 'swagger-ui/lib/sanitize-html.min.js',
     },
   },
 };
