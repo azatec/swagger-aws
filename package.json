@@ -4,7 +4,7 @@
   "description": "Swagger-UI extended with AWS authorization support",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint && jest",
     "build": "better-npm-run build",
     "start": "better-npm-run start",
     "lint": "better-npm-run lint",
@@ -68,7 +68,9 @@
   "devDependencies": {
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
+    "babel-jest": "^18.0.0",
     "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.22.0",
     "babel-preset-es2015": "^6.22.0",
     "better-npm-run": "0.0.14",
     "compression-webpack-plugin": "^0.3.2",
@@ -85,6 +87,7 @@
     "html-webpack-plugin": "^2.28.0",
     "html-webpack-template": "^6.0.1",
     "imports-loader": "^0.7.0",
+    "jest": "^18.1.0",
     "rimraf": "^2.5.4",
     "script-loader": "^0.7.0",
     "style-loader": "^0.13.1",
@@ -92,5 +95,8 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0",
     "webpack-visualizer-plugin": "^0.1.10"
+  },
+  "jest": {
+    "browser": true
   }
 }
