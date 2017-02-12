@@ -3,6 +3,8 @@ import 'jquery';
 import 'backbone';
 /* global Backbone */
 
+import { parse } from 'url';
+
 import { sign } from 'aws4';
 
 import SwaggerUi from './swagger-ui-lib';
@@ -19,13 +21,18 @@ function AWS4Authorization(service, type, keyId, key) {
 }
 
 AWS4Authorization.prototype.apply = function apply(obj) {
+  const url = parse(obj.url);
   const sig = sign({
     service: this.service,
-    host: 'localhost', // TODO Retrieve from obj
-    path: '/', // TODO Retrieve from obj
     region: 'FR', // TODO Retrieve from obj or spec
+
     method: obj.method.toUpperCase(),
-    // TODO Headers, body,...
+    hostname: url.hostname,
+    port: url.port,
+    path: url.path,
+
+    body: obj.body,
+    // TODO Any extra headers
   }, {
     accessKeyId: this.keyId,
     secretAccessKey: this.key,

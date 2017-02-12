@@ -62,7 +62,8 @@
     "querystring-browser": "^1.0.4",
     "sanitize-html": "1.11.4",
     "swagger-client": "2.1.29",
-    "swagger-ui": "2.2.10"
+    "swagger-ui": "2.2.10",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
