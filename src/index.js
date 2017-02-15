@@ -18,7 +18,7 @@ function main() {
       logo,
     }));
 
-  const url = `http://${window.location.hostname}:9000/api/swagger.json`;
+  const url = `http://${window.location.hostname}:${window.location.port}/api/swagger.json`;
 
   hljs.configure({
     highlightSizeThreshold: 5000,
