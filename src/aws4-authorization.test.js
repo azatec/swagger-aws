@@ -1,17 +1,28 @@
 /* global describe, expect, it, jest */
 
 import { sign } from 'aws4';
+import { parse } from 'url';
 
 import AWS4Authorization from './aws4-authorization';
 
-jest.mock('aws4', () => ({
-  sign: jest.fn(() => ({
-    headers: {
-      Authorization: 'AWS4-HMAC-SHA256 Credential=account/20170212/FR/service/aws4_request, SignedHeaders=host;x-amz-date, Signature=2e195c8c28f6508dbe6958c186f85ff073e6ebfd3e4af5fa46b7f2782cc64b1a',
-      'X-Amz-Date': '20170212T231620Z',
-    },
-  })),
-}));
+jest.mock('aws4');
+
+const mockUrl = 'http://localhost:9000/test';
+const mockAuthorizationHeader = 'AWS4-HMAC-SHA256 Credential=account/20170214/FR/service/aws4_request, SignedHeaders=host;x-amz-date, Signature=2e195c8c28f6508dbe6958c186f85ff073e6ebfd3e4af5fa46b7f2782cc64b1a';
+const mockXAmzDateHeader = '20170214T140217Z';
+
+sign.mockImplementation((obj) => {
+  const parsed = parse(mockUrl);
+
+  expect(obj.hostname).toEqual(parsed.hostname);
+  expect(obj.port).toEqual(parsed.port);
+  expect(obj.path).toEqual(parsed.path);
+
+  /* eslint-disable no-param-reassign */
+  obj.headers.Authorization = mockAuthorizationHeader;
+  obj.headers.Host = parsed.host;
+  obj.headers['X-Amz-Date'] = mockXAmzDateHeader;
+});
 
 
 describe('AWS4Authorization', () => {
@@ -24,10 +35,29 @@ describe('AWS4Authorization', () => {
     const signer = new AWS4Authorization('service', 'header', 'keyId', 'key');
     signer.apply({
       method: 'GET',
-      url: 'http://localhost:9000/demo',
+      url: mockUrl,
       headers: {},
     });
 
     expect(sign).toHaveBeenCalled();
+  });
+
+  it('sets headers in the passed object\'s `headers` object', () => {
+    const headers = {};
+    const signer = new AWS4Authorization('service', 'header', 'keyId', 'key');
+
+    const params = {
+      method: 'GET',
+      url: mockUrl,
+      headers,
+    };
+
+    signer.apply(params);
+
+    expect(headers).toMatchObject({
+      Host: parse(params.url).host,
+      Authorization: mockAuthorizationHeader,
+      'X-Amz-Date': mockXAmzDateHeader,
+    });
   });
 });

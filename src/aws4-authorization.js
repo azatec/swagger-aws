@@ -13,7 +13,11 @@ function AWS4Authorization(service, type, keyId, key) {
 
 AWS4Authorization.prototype.apply = function apply(obj) {
   const url = parse(obj.url);
-  const sig = sign({
+
+  /* By passing `obj.headers` as the `headers` value in the object passed to
+   * `sign`, all required headers will be set in-place.
+   */
+  sign({
     service: this.service,
     region: 'FR', // TODO Retrieve from obj or spec
 
@@ -22,22 +26,12 @@ AWS4Authorization.prototype.apply = function apply(obj) {
     port: url.port,
     path: url.path,
 
+    headers: obj.headers,
     body: obj.body,
-    // TODO Any extra headers
   }, {
     accessKeyId: this.keyId,
     secretAccessKey: this.key,
   });
-
-  /* TODO Copy (almost?) everything */
-  if (sig.headers.Authorization) {
-    // eslint-disable-next-line no-param-reassign
-    obj.headers.Authorization = sig.headers.Authorization;
-  }
-  if (sig.headers['X-Amz-Date']) {
-    // eslint-disable-next-line no-param-reassign
-    obj.headers['X-Amz-Date'] = sig.headers['X-Amz-Date'];
-  }
 
   return true;
 };
