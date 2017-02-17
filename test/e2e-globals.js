@@ -1,6 +1,8 @@
 import app from './server';
 
 module.exports = {
+  waitForConditionTimeout: 1000,
+
   before(done) {
     const server = app.listen(0, 'localhost', () => {
       const { address, family, port } = server.address();

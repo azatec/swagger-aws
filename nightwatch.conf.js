@@ -8,6 +8,7 @@ module.exports = {
   ],
   output_folder: './reports',
   globals_path: 'test/e2e-globals.js',
+  page_objects_path: 'test/e2e-pages',
   selenium: {
     start_process: true,
     server_path: require('selenium-server-standalone-jar').path,
