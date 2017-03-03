@@ -2,7 +2,12 @@
 [Swagger] AWS authorization provider, and [SwaggerUI] integration
 
 This library tracks the version of the SwaggerUI version it's tested/compatible
-with.
+with, except for the `micro` part of the version number: we take the `micro`
+version of the compatible SwaggerUI version, then multiply it with 100, and
+increase it with 1 for every actual micro release. This permits up to 100 micro
+releases of this library per micro release of SwaggerUI (which is, hopefully,
+sufficient) whilst still being compatible with [Semver](http://semver.org)
+(which doesn't provide a fourth version number).
 
 ## Usage
 ### Declaring AWS4 authorization support
@@ -63,7 +68,7 @@ To build the library, execute `npm run build`, which will build the artifacts
 using [Webpack].
 
 To test the SwaggerUI integration manually, run `npm start` which will launch a
-demo on (http://localhost:9000)[http://localhost:9000].
+demo on [http://localhost:9000](http://localhost:9000).
 
 To run tests, run `npm test`. This will lint the code using [ESLint], type-check
 using [Flow] and run a couple of [Jest] tests.

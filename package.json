@@ -1,6 +1,6 @@
 {
   "name": "swagger-aws",
-  "version": "2.2.10",
+  "version": "2.2.1000-pre",
   "description": "Swagger and SwaggerUI extensions for AWS4 authorization support",
   "main": "src/index.js",
   "scripts": {
