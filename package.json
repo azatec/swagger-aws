@@ -45,6 +45,7 @@
     ],
     "moduleNameMapper": {
       "^b$": "empty-module",
+      "^crypto$": "<rootDir>/src/authorization/aws4-crypto-js",
       "^handlebars/runtime$": "swagger-ui/dist/lib/handlebars-4.0.5",
       "^sanitize-html$": "swagger-ui/dist/lib/sanitize-html.min"
     },
@@ -100,6 +101,7 @@
   },
   "dependencies": {
     "aws4": "^1.6.0",
+    "crypto-js": "^3.1.9-1",
     "querystring-browser": "^1.0.4",
     "url": "^0.11.0"
   },

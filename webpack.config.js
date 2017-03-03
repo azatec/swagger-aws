@@ -25,6 +25,7 @@ module.exports = {
   resolve: {
     alias: {
       querystring: 'querystring-browser',
+      crypto: path.resolve(srcPath, 'authorization/aws4-crypto-js.js'),
     },
   },
 
