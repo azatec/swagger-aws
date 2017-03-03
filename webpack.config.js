@@ -42,7 +42,7 @@ module.exports = {
       root: 'Backbone',
     },
     'swagger-ui': 'SwaggerUi',
-    handlebars: {
+    'handlebars/runtime': {
       commonjs: 'handlebars',
       commonjs2: 'handlebars',
       amd: 'handlebars',
@@ -84,6 +84,16 @@ module.exports = {
               helperDirs: [
                 path.resolve(srcPath, 'handlebars-helpers'),
               ],
+              /* This needs to be set such that Handlebars doesn't get included
+               * in the bundle (which is not required: it's an 'external').
+               * The reason: `handlebars-loader` uses the result of
+               * `require.resolve('handlebars/runtime')` in the code it
+               * generates, which is a path to the Handlebars package installed
+               * in `node_modules`. As such the 'externals' recognition doesn't
+               * kick in, and the runtime gets included in the bundle.
+               * When setting it as an option, the string is used as-is.
+               */
+              runtime: 'handlebars/runtime',
             },
           },
         ],
