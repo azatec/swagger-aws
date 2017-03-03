@@ -3,3 +3,5 @@ dist/
 reports/
 hs_err_pid*.log
 selenium-debug.log
+coverage/
+npm-debug.log

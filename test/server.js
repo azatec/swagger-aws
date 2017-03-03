@@ -1,10 +1,38 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, strict */
 
-import * as path from 'path';
-import * as url from 'url';
-import * as express from 'express';
+'use strict';
 
-const app = express.default();
+const fs = require('fs');
+const path = require('path');
+const url = require('url');
+const express = require('express');
+
+const pkg = require('../package.json');
+
+const scriptLine = "<script src='swagger-ui.js' type='text/javascript'></script>";
+const baseUrl = 'http://petstore.swagger.io/v2/swagger.json';
+
+const index = fs.readFileSync(
+  path.resolve(__dirname, '../node_modules/swagger-ui/dist/index.html'))
+  .toString();
+
+if (index.search(scriptLine) === -1
+    || index.search(baseUrl) === -1) {
+  throw new Error('Unexpected index.html source');
+}
+
+const patchedIndex = index.replace(
+  scriptLine, [
+    scriptLine,
+    `<script src='SwaggerAws.Authorization-${pkg.version}.min.js' type='text/javascript'></script>`,
+    `<script src='SwaggerAws.Ui-${pkg.version}.min.js' type='text/javascript'></script>`,
+    "<script type='text/javascript'>",
+    'SwaggerAws.Ui.patch();',
+    '</script>',
+  ].join('\n'))
+  .replace(baseUrl, '/api/swagger.json');
+
+const app = express();
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Headers', 'Authorization, X-Amz-Date');
@@ -73,6 +101,12 @@ app.get('/api/account', (req, res) => {
   }
 });
 
-app.use(express.static(path.resolve(__dirname, '../dist')));
+app.get('/', (req, res) => {
+  res.set('Content-Type', 'text/html');
+  res.send(patchedIndex);
+});
 
-export default app;
+app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '../node_modules/swagger-ui/dist')));
+
+module.exports = app;

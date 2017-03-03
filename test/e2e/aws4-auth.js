@@ -10,6 +10,7 @@ export default {
     const getAccountPage = client.page.swaggerUiGetAccount();
 
     getAccountPage
+      .expandGetAccount()
       .getAccount();
 
     getAccountPage.expect.element('@curl').text.to.contain('AWS4-HMAC-SHA256');

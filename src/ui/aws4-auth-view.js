@@ -1,7 +1,6 @@
-import 'backbone';
-/* global Backbone */
-import 'jquery';
-/* global $ */
+// @flow
+import Backbone from 'backbone';
+import $ from 'jquery';
 
 import AWS4AuthTemplate from './aws4-auth-view.handlebars';
 
@@ -16,17 +15,12 @@ const AWS4AuthView = Backbone.View.extend({
   },
   template: AWS4AuthTemplate,
 
-  initialize: function initialize(opts) {
-    this.options = opts || {};
-    this.router = this.options.router;
-  },
-
   render: function render() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
   },
 
-  inputChange: function aws4KeyChange(e) {
+  inputChange: function inputChange(e) {
     const $el = $(e.target);
     const val = $el.val();
     const name = $el.prop('name');

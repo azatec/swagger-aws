@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AWS4AuthView should not regress 1`] = `
+"<div class=\\"key_input_container\\">
+  <h3 class=\\"auth__title\\">AWS4 authorization</h3>
+  <div class=\\"auth__description\\"></div>
+  <div>
+    <!--
+    <div class=\\"key_auth__field\\">
+      <span class=\\"key_auth__label\\">in:</span>
+      <span class=\\"key_auth__value\\">header</span>
+    </div>
+    -->
+    <div class=\\"key_auth__field\\">
+      <span class=\\"key_auth__label\\">Service:</span>
+      <span class=\\"key_auth__value\\">tests</span>
+    </div>
+    <div>
+      <span class=\\"key_auth__label\\">Key ID:</span>
+        <input required=\\"\\" placeholder=\\"Key ID\\" class=\\"auth_input input_aws4_keyId_entry\\" name=\\"keyId\\" type=\\"text\\">
+    </div>
+      <div>
+        <span class=\\"key_auth__label\\">Key:</span>
+        <input required=\\"\\" placeholder=\\"Key\\" class=\\"auth_input input_aws4_key_entry\\" name=\\"key\\" type=\\"password\\">
+      </div>
+  </div>
+</div>
+"
+`;

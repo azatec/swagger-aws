@@ -1,16 +1,17 @@
-import 'backbone';
-/* global Backbone */
+// @flow
+import Backbone from 'backbone';
 
 const AWS4AuthModel = Backbone.Model.extend({
-  default: {
+  defaults: {
     'x-in': 'header',
-    'x-service': '',
-    keyId: '',
-    key: '',
+    'x-service': null,
+    keyId: null,
+    key: null,
   },
 
   initialize: function initialize() {
     this.on('change', this.validate);
+    this.validate();
   },
 
   validate: function validate() {

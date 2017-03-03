@@ -1,0 +1,12 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[options]
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+module.file_ext=.handlebars
+
+[version]
+0.40

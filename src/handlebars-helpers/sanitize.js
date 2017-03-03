@@ -1,8 +1,9 @@
+// @flow
 import Handlebars from 'handlebars/runtime';
 import sanitizeHtml from 'sanitize-html';
 
 /* Taken (and ES2015'ed) from SwaggerUI */
-export default function sanitize(text) {
+export default function sanitize(text: string) {
   return new Handlebars.SafeString(
     sanitizeHtml(
       text === undefined ? '' : text,

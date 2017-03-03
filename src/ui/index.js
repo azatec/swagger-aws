@@ -1,8 +1,8 @@
-import 'backbone';
-/* global Backbone */
+// @flow
+import Backbone from 'backbone';
+import SwaggerUi from 'swagger-ui';
 
-import SwaggerUi from './swagger-ui-lib';
-import AWS4Authorization from './aws4-authorization';
+import { AWS4Authorization } from '../authorization';
 import AWS4AuthModel from './aws4-auth-model';
 import AWS4AuthView from './aws4-auth-view';
 
@@ -66,7 +66,8 @@ function patchAuthsCollectionView() {
     };
 }
 
-export default function () {
+// eslint-disable-next-line import/prefer-default-export
+export function patch() {
   patchAuthView();
   patchAuthsCollection();
   patchAuthsCollectionView();

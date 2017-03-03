@@ -1,4 +1,4 @@
-/* global describe, expect, it, jest */
+// @flow
 
 import { sign } from 'aws4';
 import { parse } from 'url';
@@ -27,8 +27,9 @@ sign.mockImplementation((obj) => {
 
 describe('AWS4Authorization', () => {
   it('only supports "header" authentication', () => {
+    // $FlowIgnore This explicitly tests handling of an invalid 'type'
     const construct = () => new AWS4Authorization('service', 'query', 'keyId', 'key');
-    expect(construct).toThrow(/header signatures/);
+    expect(construct).toThrowError(/header signatures/);
   });
 
   it('calls `aws4.sign` upon application', () => {

@@ -1,107 +1,112 @@
 {
-  "name": "swagger-ui-aws",
-  "version": "0.0.1",
-  "description": "Swagger-UI extended with AWS authorization support",
+  "name": "swagger-aws",
+  "version": "2.2.10",
+  "description": "Swagger and SwaggerUI extensions for AWS4 authorization support",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm run lint && jest",
-    "build": "better-npm-run build",
-    "start": "better-npm-run start",
-    "lint": "better-npm-run lint",
-    "clean": "rimraf dist",
-    "serve": "node bin/server.js",
-    "e2e": "npm run build && nightwatch -e default,chrome"
-  },
-  "betterScripts": {
-    "build": {
-      "command": "webpack",
-      "env": {
-        "NODE_ENV": "production"
-      }
-    },
-    "start": {
-      "command": "webpack-dev-server",
-      "env": {
-        "NODE_ENV": "development"
-      }
-    },
-    "lint": {
-      "command": "eslint $( git ls-files | grep .js$ )"
-    }
+    "build": "webpack",
+    "e2e": "npm-run-all build nightwatch",
+    "flow": "flow",
+    "jest": "jest",
+    "lint": "eslint .",
+    "nightwatch": "nightwatch -e chrome,default",
+    "serve": "node -e 'require(\"./test/server.js\").listen(9000)'",
+    "start": "npm-run-all build serve",
+    "test": "npm-run-all --parallel lint jest flow"
   },
   "babel": {
     "presets": [
       "es2015"
+    ],
+    "plugins": [
+      "transform-export-extensions",
+      "transform-flow-strip-types"
     ]
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": "airbnb",
+    "extends": [
+      "airbnb",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "jest"
+    ],
     "env": {
-      "browser": true
+      "browser": true,
+      "jest/globals": true
+    }
+  },
+  "jest": {
+    "browser": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**.js"
+    ],
+    "moduleNameMapper": {
+      "^b$": "empty-module",
+      "^handlebars$": "swagger-ui/dist/lib/handlebars-4.0.5",
+      "^sanitize-html$": "swagger-ui/dist/lib/sanitize-html.min"
+    },
+    "setupFiles": [
+      "./test/setupGlobalEnv.js"
+    ],
+    "transform": {
+      "\\.js$": "babel-jest",
+      "\\.handlebars": "<rootDir>/test/handlebarsTransformer.js"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Scality/swagger-ui-aws.git"
+    "url": "git+https://github.com/Scality/swagger-aws.git"
   },
   "author": "Nicolas Trangez <nicolas.trangez@scality.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Scality/swagger-ui-aws/issues"
+    "url": "https://github.com/Scality/swagger-aws/issues"
   },
-  "homepage": "https://github.com/Scality/swagger-ui-aws#readme",
+  "homepage": "https://github.com/Scality/swagger-aws#readme",
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "backbone": "1.1.2",
+    "chromedriver": "^2.27.3",
+    "empty-module": "0.0.2",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-loader": "^1.6.3",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jest": "^19.0.1",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
+    "express": "^4.14.1",
+    "flow-bin": "^0.40.0",
+    "geckodriver": "^1.4.0",
+    "handlebars": "4.0.5",
+    "handlebars-loader": "^1.4.0",
+    "jest": "^19.0.2",
+    "jquery": "^1.8.0",
+    "nightwatch": "^0.9.12",
+    "npm-run-all": "^4.0.2",
+    "sanitize-html": "1.11.4",
+    "selenium-server-standalone-jar": "^3.1.0",
+    "swagger-ui": "2.2.10",
+    "webpack": "^2.2.1"
+  },
   "dependencies": {
     "aws4": "^1.6.0",
-    "backbone": "1.1.2",
-    "es5-shim": "^4.5.9",
-    "handlebars": "4.0.5",
-    "highlight.js": "9.1.0",
-    "jquery": "1.8.2",
-    "json-editor": "^0.7.22",
-    "marked": "0.3.3",
     "querystring-browser": "^1.0.4",
-    "sanitize-html": "1.11.4",
-    "swagger-client": "2.1.29",
-    "swagger-ui": "2.2.10",
     "url": "^0.11.0"
   },
-  "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-eslint": "^7.1.1",
-    "babel-jest": "^18.0.0",
-    "babel-loader": "^6.2.10",
-    "babel-polyfill": "^6.22.0",
-    "babel-preset-es2015": "^6.22.0",
-    "better-npm-run": "0.0.14",
-    "chromedriver": "^2.27.3",
-    "compression-webpack-plugin": "^0.3.2",
-    "css-loader": "^0.26.1",
-    "eslint": "^3.15.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.9.0",
-    "express": "^4.14.1",
-    "extract-text-webpack-plugin": "^2.0.0-rc.3",
-    "file-loader": "^0.10.0",
-    "geckodriver": "^1.4.0",
-    "handlebars-loader": "^1.4.0",
-    "html-webpack-plugin": "^2.28.0",
-    "html-webpack-template": "^6.0.1",
-    "imports-loader": "^0.7.0",
-    "jest": "^18.1.0",
-    "nightwatch": "^0.9.12",
-    "rimraf": "^2.5.4",
-    "script-loader": "^0.7.0",
-    "selenium-server-standalone-jar": "^3.0.1",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.3.0",
-    "webpack-visualizer-plugin": "^0.1.10"
-  },
-  "jest": {
-    "browser": true
+  "peerDependencies": {
+    "backbone": "1.1.2",
+    "handlebars": "4.0.5",
+    "jquery": "1.8.0",
+    "sanitize-html": "1.11.4",
+    "swagger-ui": "2.2.10"
   }
 }

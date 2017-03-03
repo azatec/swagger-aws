@@ -1,4 +1,10 @@
 const getAccountCommands = {
+  expandGetAccount() {
+    return this
+      .click('.expandResource')
+      .waitForElementVisible('@form');
+  },
+
   getAccount() {
     return this
       .waitForElementVisible('@form')
