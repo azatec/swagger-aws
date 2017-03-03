@@ -28,6 +28,8 @@ export default class AWS4AAuthorization {
   apply(obj: Request) {
     const url = parse(obj.url);
 
+    const origHost = obj.headers.Host;
+
     /* By passing `obj.headers` as the `headers` value in the object passed to
      * `sign`, all required headers will be set in-place.
      */
@@ -46,6 +48,11 @@ export default class AWS4AAuthorization {
       accessKeyId: this.keyId,
       secretAccessKey: this.key,
     });
+
+    delete obj.headers.Host; // eslint-disable-line no-param-reassign
+    if (typeof origHost !== 'undefined') {
+      obj.headers.Host = origHost; // eslint-disable-line no-param-reassign
+    }
 
     return true;
   }

@@ -20,7 +20,6 @@ sign.mockImplementation((obj) => {
 
   /* eslint-disable no-param-reassign */
   obj.headers.Authorization = mockAuthorizationHeader;
-  obj.headers.Host = parsed.host;
   obj.headers['X-Amz-Date'] = mockXAmzDateHeader;
 });
 
@@ -56,7 +55,6 @@ describe('AWS4Authorization', () => {
     signer.apply(params);
 
     expect(headers).toMatchObject({
-      Host: parse(params.url).host,
       Authorization: mockAuthorizationHeader,
       'X-Amz-Date': mockXAmzDateHeader,
     });
