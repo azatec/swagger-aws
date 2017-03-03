@@ -1,6 +1,7 @@
 // @flow
 import Backbone from 'backbone';
 import SwaggerUi from 'swagger-ui';
+import _ from 'lodash';
 
 import { AWS4Authorization } from '../authorization';
 import AWS4AuthModel from './aws4-auth-model';
@@ -25,7 +26,7 @@ function patchAuthView() {
 }
 
 function patchAuthsCollection() {
-  const orig = SwaggerUi.Collections.AuthsCollection.prototype.handleOne;
+  const origHandleOne = SwaggerUi.Collections.AuthsCollection.prototype.handleOne;
 
   SwaggerUi.Collections.AuthsCollection.prototype.handleOne = function handleOne(model, ...rest) {
     let result = null;
@@ -36,12 +37,52 @@ function patchAuthsCollection() {
           result = new AWS4AuthModel(model);
           break;
         default:
-          result = orig.call(this, model, ...rest);
+          result = origHandleOne.call(this, model, ...rest);
           break;
       }
     }
 
     return result;
+  };
+
+  const origParse = SwaggerUi.Collections.AuthsCollection.prototype.parse;
+  SwaggerUi.Collections.AuthsCollection.prototype.parse = function parse(data, ...rest) {
+    const aws4 = {};
+    const others = {};
+
+    _.each(data, (value, key) => {
+      if (value.type === 'x-aws4') {
+        aws4[key] = value;
+      } else {
+        others[key] = value;
+      }
+    });
+
+    const origResults = origParse.call(this, others, ...rest);
+
+    let authz = {};
+    if (typeof window.swaggerUi !== 'undefined') {
+      authz = Object.assign({}, window.swaggerUi.api.clientAuthorizations.authz);
+    }
+
+    const aws4Results = _.map(aws4, (auth, name) => {
+      _.extend(auth, {
+        title: name,
+      });
+
+      if (authz[name]) {
+        _.extend(auth, {
+          isLogout: true,
+          valid: true,
+          keyId: authz[name].keyId,
+          key: authz[name].key,
+        });
+      }
+
+      return auth;
+    });
+
+    return [...origResults, ...aws4Results];
   };
 }
 

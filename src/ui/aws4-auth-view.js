@@ -29,7 +29,9 @@ const AWS4AuthView = Backbone.View.extend({
       $el.removeClass('error');
     }
 
-    this.model.set(name, val);
+    this.model.set({
+      [name]: val,
+    });
   },
 
   isValid: function isValid() {

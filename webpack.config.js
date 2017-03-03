@@ -48,6 +48,12 @@ module.exports = {
       amd: 'handlebars',
       root: 'Handlebars',
     },
+    lodash: {
+      commonjs: 'lodash',
+      commonjs2: 'lodash',
+      amd: 'lodash',
+      root: '_',
+    },
     'sanitize-html': {
       commonjs: 'sanitize-html',
       commonjs2: 'sanitize-html',
