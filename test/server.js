@@ -4,10 +4,10 @@
 
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
 const express = require('express');
 
 const pkg = require('../package.json');
+const swagger = require('./swagger.json');
 
 const scriptLine = "<script src='swagger-ui.js' type='text/javascript'></script>";
 const baseUrl = 'http://petstore.swagger.io/v2/swagger.json';
@@ -40,12 +40,6 @@ app.use((req, res, next) => {
 });
 
 app.get('/api/swagger.json', (req, res) => {
-  const swagger = require('./swagger.json'); // eslint-disable-line global-require
-  if (typeof app.serverUrl !== 'undefined') {
-    const serverUrl = url.parse(app.serverUrl);
-    swagger.host = serverUrl.host;
-    swagger.basePath = `${serverUrl.pathname}api`;
-  }
   res.json(swagger);
 });
 

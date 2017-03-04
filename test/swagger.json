@@ -5,7 +5,6 @@
         "description": "A demonstration of an API using AWS4 authorization",
         "version": "0.0.1"
     },
-    "host": "localhost:9000",
     "schemes": [
         "http"
     ],
