@@ -6,33 +6,48 @@ import 'crypto-js/enc-utf8';
 import 'crypto-js/hmac';
 import 'crypto-js/sha256';
 
+type HashResult = {
+  toString(encoder: ?any): string;
+};
+
+type HashState = {
+  update(data: string): void;
+  finalize(): HashResult;
+}
+
+type HashAlgorithm = {
+  create(): HashState;
+};
+
 class Hmac {
-  constructor(hasher, key) {
-    this.hmac = algo.HMAC.create(hasher, key);
+  state: HashState;
+
+  constructor(algorithm: HashAlgorithm, key: string) {
+    this.state = algo.HMAC.create(algorithm, key);
   }
 
-  update(string, encoding) {
-    if (encoding !== 'utf8') {
+  update(string: string, encoding: ?string) {
+    if (typeof encoding !== 'undefined' && encoding !== null && encoding !== 'utf8') {
       throw new Error(`Unsupported encoding: ${encoding}`);
     }
 
-    this.hmac.update(enc.Utf8.parse(string));
+    this.state.update(enc.Utf8.parse(string));
 
     return this;
   }
 
-  digest(encoding) {
-    if (typeof encoding !== 'undefined' && encoding !== 'hex') {
+  digest(encoding: ?string) {
+    if (typeof encoding !== 'undefined' && encoding !== null && encoding !== 'hex') {
       throw new Error(`Unsupported encoding: ${encoding}`);
     }
 
-    return this.hmac.finalize().toString(enc.Hex);
+    return this.state.finalize().toString(enc.Hex);
   }
 }
 
-export function createHmac(alg, key) {
-  if (alg !== 'sha256') {
-    throw new Error(`Unsupported algorithm: ${alg}`);
+export function createHmac(algorithm: string, key: string): Hmac {
+  if (algorithm !== 'sha256') {
+    throw new Error(`Unsupported algorithm: ${algorithm}`);
   }
 
   return new Hmac(algo.SHA256, key);
@@ -40,32 +55,34 @@ export function createHmac(alg, key) {
 
 
 class Hash {
-  constructor(hasher) {
-    this.hasher = hasher.create();
+  state: HashState;
+
+  constructor(algorithm: HashAlgorithm) {
+    this.state = algorithm.create();
   }
 
-  update(string, encoding) {
-    if (encoding !== 'utf8') {
+  update(string: string, encoding: ?string) {
+    if (typeof encoding !== 'undefined' && encoding !== null && encoding !== 'utf8') {
       throw new Error(`Unsupported encoding: ${encoding}`);
     }
 
-    this.hasher.update(enc.Utf8.parse(string));
+    this.state.update(enc.Utf8.parse(string));
 
     return this;
   }
 
-  digest(encoding) {
-    if (typeof encoding !== 'undefined' && encoding !== 'hex') {
+  digest(encoding: ?string) {
+    if (typeof encoding !== 'undefined' && encoding !== null && encoding !== 'hex') {
       throw new Error(`Unsupported encoding: ${encoding}`);
     }
 
-    return this.hasher.finalize().toString(enc.Hex);
+    return this.state.finalize().toString(enc.Hex);
   }
 }
 
-export function createHash(alg) {
-  if (alg !== 'sha256') {
-    throw new Error(`Unsupported algorithm: ${alg}`);
+export function createHash(algorithm: string): Hash {
+  if (algorithm !== 'sha256') {
+    throw new Error(`Unsupported algorithm: ${algorithm}`);
   }
 
   return new Hash(algo.SHA256);

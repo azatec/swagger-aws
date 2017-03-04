@@ -2,6 +2,7 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
 
+// $FlowIgnore Loading this doesn't work
 import AWS4AuthTemplate from './aws4-auth-view.handlebars';
 
 const AWS4AuthView = Backbone.View.extend({
