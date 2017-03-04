@@ -1,5 +1,4 @@
 node_modules/
-dist/
 reports/
 hs_err_pid*.log
 selenium-debug.log
