@@ -121,4 +121,13 @@ module.exports = {
       name: ['Ui', 'Authorization'],
     }),
   ],
+
+  performance: {
+    hints: 'error',
+    /* Bail out when a bundle would go past 100kB. At the time of writing we're
+     * at 54kB for `Authorization` and 7.4kB for `Ui`, so this value should be
+     * good for a while.
+     */
+    maxEntrypointSize: 102400,
+  },
 };
