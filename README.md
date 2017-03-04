@@ -19,6 +19,7 @@ API specification, as follows:
 - `type`: `x-aws4`
 - `x-in`: `header` (currently only header-based signatures are supported)
 - `x-service`: name of the service
+- `x-region`: region of the service
 
 Standard fields like `description` are supported as well.
 
@@ -30,10 +31,11 @@ The AWS4 authorization provider can be used by including
 ```javascript
 // Value of the `x-service` field in the API spec
 var service = 'api';
+var region = 'be-east-2';
 var keyId = 'myKeyId';
 var key = 'myKey';
 
-var aws4 = new AWS4Authorization(service, 'header', keyId, key);
+var aws4 = new AWS4Authorization(service, region, 'header', keyId, key);
 
 // Name of the security definition as defined in the API spec
 var schemeName = 'aws4Auth';

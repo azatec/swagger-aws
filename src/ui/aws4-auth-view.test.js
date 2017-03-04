@@ -7,6 +7,7 @@ describe('AWS4AuthView', () => {
     const model = new AWS4AuthModel({
       'x-in': 'header',
       'x-service': 'tests',
+      'x-region': 'be-west-1',
     });
     const view = new AWS4AuthView({ model });
     expect(view.render().$el.html()).toMatchSnapshot();
@@ -16,6 +17,7 @@ describe('AWS4AuthView', () => {
     const model = new AWS4AuthModel({
       'x-in': 'header',
       'x-service': 'tests',
+      'x-region': 'uk-central-1',
     });
     const view = new AWS4AuthView({ model }).render();
 
@@ -37,6 +39,7 @@ describe('AWS4AuthView', () => {
   xit('removes highlighting of invalid fields after input entered', () => {
     const model = new AWS4AuthModel({
       'x-service': 'tests',
+      'x-region': 'fr-east-2',
     });
     const view = new AWS4AuthView({ model }).render();
 
@@ -58,6 +61,7 @@ describe('AWS4AuthView', () => {
     it(`reacts on change events of the '${fieldName}' input field`, () => {
       const model = new AWS4AuthModel({
         'x-service': 'tests',
+        'x-region': 'us-east-3',
       });
       const view = new AWS4AuthView({ model }).render();
       const input = view.$(`.input_aws4_${fieldName}_entry`);
@@ -84,6 +88,7 @@ describe('AWS4AuthView', () => {
     const view = new AWS4AuthView({
       model: new AWS4AuthModel({
         'x-service': 'tests',
+        'x-region': 'jp-east-1',
       }),
     }).render();
     const keyIdField = view.$('.input_aws4_keyId_entry');

@@ -22,7 +22,8 @@
             "type": "x-aws4",
             "description": "AWS4 signature authentication",
             "x-in": "header",
-            "x-service": "demo"
+            "x-service": "demo",
+            "x-region": "be-east-1"
         }
     },
     "paths": {

@@ -16,7 +16,7 @@ function patchAuthView() {
 
       if (type === 'x-aws4') {
         const aws4Auth = new AWS4Authorization(
-          auth.get('x-service'), auth.get('x-in'), auth.get('keyId'), auth.get('key'));
+          auth.get('x-service'), auth.get('x-region'), auth.get('x-in'), auth.get('keyId'), auth.get('key'));
         this.router.api.clientAuthorizations.add(auth.get('title'), aws4Auth);
       }
     }, this);

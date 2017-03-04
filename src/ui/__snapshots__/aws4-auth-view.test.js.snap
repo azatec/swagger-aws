@@ -15,6 +15,10 @@ exports[`AWS4AuthView should not regress 1`] = `
       <span class=\\"key_auth__label\\">Service:</span>
       <span class=\\"key_auth__value\\">tests</span>
     </div>
+    <div class=\\"key_auth__field\\">
+      <span class=\\"key_auth__label\\">Region:</span>
+      <span class=\\"key_auth__value\\">be-west-1</span>
+    </div>
     <div>
       <span class=\\"key_auth__label\\">Key ID:</span>
         <input required=\\"\\" placeholder=\\"Key ID\\" class=\\"auth_input input_aws4_keyId_entry\\" name=\\"keyId\\" type=\\"text\\">

@@ -1,11 +1,13 @@
 const loginCommands = {
-  login(keyId, key) {
+  openDialog() {
     return this
       .waitForElementVisible('@authorizeDialogButton')
 
       .click('@authorizeDialogButton')
-      .waitForElementVisible('@authorizeDialog')
-
+      .waitForElementVisible('@authorizeDialog');
+  },
+  login(keyId, key) {
+    return this
       .assert.visible('@keyIdInput')
       .assert.visible('@keyInput')
       .assert.visible('@authorizeButton')
@@ -13,6 +15,11 @@ const loginCommands = {
       .setValue('@keyIdInput', keyId)
       .setValue('@keyInput', key)
       .click('@authorizeButton');
+  },
+  closeDialog() {
+    return this
+      .assert.visible('@cancelButton')
+      .click('@cancelButton');
   },
 };
 
@@ -34,6 +41,9 @@ module.exports = {
     authorizeButton: {
       selector: '(//button[@class="auth__button auth_submit__button"])[2]',
       locateStrategy: 'xpath',
+    },
+    cancelButton: {
+      selector: '.api-popup-cancel',
     },
   },
 };

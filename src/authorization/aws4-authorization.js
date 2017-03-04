@@ -12,15 +12,17 @@ type Request = {
 
 export default class AWS4AAuthorization {
   service: string;
+  region: string;
   keyId: string;
   key: string;
 
-  constructor(service: string, type: 'header', keyId: string, key: string) {
+  constructor(service: string, region: string, type: 'header', keyId: string, key: string) {
     if (type !== 'header') {
       throw Error('Only header signatures supported');
     }
 
     this.service = service;
+    this.region = region;
     this.keyId = keyId;
     this.key = key;
   }
@@ -35,7 +37,7 @@ export default class AWS4AAuthorization {
      */
     sign({
       service: this.service,
-      region: 'FR', // TODO Retrieve from obj or spec
+      region: this.region,
 
       method: obj.method.toUpperCase(),
       hostname: url.hostname,

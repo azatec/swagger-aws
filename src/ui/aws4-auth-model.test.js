@@ -7,6 +7,7 @@ describe('AWS4AuthModel', () => {
 
   it('has no defaults for `x-service`, `keyId` and `key`', () => {
     expect(new AWS4AuthModel().get('x-service')).toBeNull();
+    expect(new AWS4AuthModel().get('x-region')).toBeNull();
     expect(new AWS4AuthModel().get('keyId')).toBeNull();
     expect(new AWS4AuthModel().get('key')).toBeNull();
   });
@@ -37,6 +38,7 @@ describe('AWS4AuthModel', () => {
   it('is valid after full construction', () => {
     const model = new AWS4AuthModel({
       'x-service': 'tests',
+      'x-region': 'eu-east-1',
     });
 
     model.set('keyId', 'theKeyId');
