@@ -6,14 +6,14 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 const swagger = require('./swagger.json');
 
 const scriptLine = "<script src='swagger-ui.js' type='text/javascript'></script>";
 const baseUrl = 'http://petstore.swagger.io/v2/swagger.json';
 
 const index = fs.readFileSync(
-  path.resolve(__dirname, '../node_modules/swagger-ui/dist/index.html'))
+  path.resolve(__dirname, '../../node_modules/swagger-ui/dist/index.html'))
   .toString();
 
 if (index.search(scriptLine) === -1
@@ -100,7 +100,7 @@ app.get('/', (req, res) => {
   res.send(patchedIndex);
 });
 
-app.use(express.static(path.resolve(__dirname, '../dist')));
-app.use(express.static(path.resolve(__dirname, '../node_modules/swagger-ui/dist')));
+app.use(express.static(path.resolve(__dirname, '../../dist')));
+app.use(express.static(path.resolve(__dirname, '../../node_modules/swagger-ui/dist')));
 
 module.exports = app;

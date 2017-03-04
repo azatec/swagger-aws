@@ -10,7 +10,7 @@
     "jest": "jest",
     "lint": "eslint .",
     "nightwatch": "nightwatch -e chrome,default",
-    "serve": "node -e 'require(\"./test/server.js\").listen(9000)'",
+    "serve": "node -e 'require(\"./test/server\").listen(9000)'",
     "start": "npm-run-all build serve",
     "test": "npm-run-all --parallel lint jest flow"
   },
@@ -50,12 +50,12 @@
       "^sanitize-html$": "swagger-ui/dist/lib/sanitize-html.min"
     },
     "setupFiles": [
-      "./test/setupGlobalEnv.js"
+      "./test/jest/setupGlobalEnv.js"
     ],
     "testResultsProcessor": "jest-junit",
     "transform": {
       "\\.js$": "babel-jest",
-      "\\.handlebars": "<rootDir>/test/handlebarsTransformer.js"
+      "\\.handlebars": "<rootDir>/test/jest/handlebarsTransformer.js"
     }
   },
   "repository": {
