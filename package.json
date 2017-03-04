@@ -6,10 +6,15 @@
   "scripts": {
     "build": "webpack",
     "e2e": "npm-run-all build nightwatch",
+    "e2e:headless": "E2E_HEADLESS=1 npm-run-all selenium:docker-compose selenium:wait nightwatch:chrome",
     "flow": "flow",
     "jest": "jest",
     "lint": "eslint .",
-    "nightwatch": "nightwatch -e chrome,default",
+    "nightwatch": "nightwatch -e chrome,firefox",
+    "nightwatch:chrome": "nightwatch -e chrome",
+    "nightwatch:firefox": "nightwatch -e firefox",
+    "selenium:docker-compose": "docker-compose -f test/e2e/docker-compose.yml up -d",
+    "selenium:wait": "./test/e2e/wait-for-selenium.sh",
     "serve": "node -e 'require(\"./test/server\").listen(9000)'",
     "start": "npm-run-all build serve",
     "test": "npm-run-all --parallel lint jest flow"

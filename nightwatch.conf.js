@@ -2,6 +2,8 @@
 
 require('babel-core/register');
 
+const headless = typeof process.env.E2E_HEADLESS !== 'undefined';
+
 module.exports = {
   src_folders: [
     'test/e2e/scenarios',
@@ -10,7 +12,7 @@ module.exports = {
   globals_path: 'test/e2e/globals.js',
   page_objects_path: 'test/e2e/pages',
   selenium: {
-    start_process: true,
+    start_process: !headless,
     server_path: require('selenium-server-standalone-jar').path,
     host: '127.0.0.1',
     port: 4444,
@@ -21,6 +23,18 @@ module.exports = {
   },
   test_settings: {
     default: {
+      /* In non-headless mode, the URL will be set in the `before` handler in
+       * `globals.js`, depending on the port the Express server gets started on
+       */
+      launch_url: headless ? 'http://swagger-aws:9000' : null,
+      screenshots: {
+        enabled: true,
+        path: `./reports/screenshots`,
+        on_error: true,
+        on_failure: true,
+      },
+    },
+    firefox: {
       desiredCapabilities: {
         browserName: 'firefox',
       },

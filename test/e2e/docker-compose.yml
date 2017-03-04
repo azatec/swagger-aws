@@ -1,0 +1,25 @@
+swagger-aws:
+  build: ../..
+  expose:
+    - '9000'
+
+selenium-hub:
+  image: 'selenium/hub:3'
+  expose:
+    - '4444'
+  ports:
+    - '4444:4444'
+
+selenium-chrome:
+  image: 'selenium/node-chrome:3'
+  links:
+    - swagger-aws
+    - selenium-hub:hub
+  environment:
+    - JAVA_OPTS=-Dwebdriver.chrome.args="--whitelisted-ips=''"
+
+selenium-firefox:
+  image: 'selenium/node-firefox:3'
+  links:
+    - swagger-aws
+    - selenium-hub:hub

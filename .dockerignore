@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+reports
+coverage
+hs_err_pid*.log
+selenium-debug.log
+junit.xml
+*~
+*.swp

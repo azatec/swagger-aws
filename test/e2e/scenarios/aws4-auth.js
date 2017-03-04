@@ -1,9 +1,11 @@
 export default {
   Login: (client) => {
+    client
+      .url(client.launchUrl ? client.launchUrl : client.globals.launchUrl);
+
     const loginPage = client.page.swaggerUiLogin();
 
     loginPage
-      .navigate(client.globals.url)
       .openDialog();
 
     loginPage.expect.element('@authorizeDialog').text.to.contain('demo');
