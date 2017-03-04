@@ -3,12 +3,16 @@
 require('babel-core/register');
 
 const headless = typeof process.env.E2E_HEADLESS !== 'undefined';
+const reports =
+  process.env.CIRCLE_TEST_REPORTS
+    ? `${process.env.CIRCLE_TEST_REPORTS}/e2e`
+    : './reports';
 
 module.exports = {
   src_folders: [
     'test/e2e/scenarios',
   ],
-  output_folder: './reports',
+  output_folder: reports,
   globals_path: 'test/e2e/globals.js',
   page_objects_path: 'test/e2e/pages',
   selenium: {
@@ -29,7 +33,7 @@ module.exports = {
       launch_url: headless ? 'http://swagger-aws:9000' : null,
       screenshots: {
         enabled: true,
-        path: `./reports/screenshots`,
+        path: `${reports}/screenshots`,
         on_error: true,
         on_failure: true,
       },

@@ -1,6 +1,8 @@
 machine:
   node:
     version: 6.1.0
+  services:
+    - docker
 
 test:
   pre:
@@ -9,3 +11,4 @@ test:
     - npm test -- --max-parallel 1:
         environment:
           JEST_JUNIT_OUTPUT: $CIRCLE_TEST_REPORTS/jest/junit.xml
+    - npm run e2e:headless
