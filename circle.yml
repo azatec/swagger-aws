@@ -3,5 +3,9 @@ machine:
     version: 6.1.0
 
 test:
+  pre:
+    - mkdir -p $CIRCLE_TEST_REPORTS/jest
   override:
-    - npm test -- --max-parallel 1
+    - npm test -- --max-parallel 1:
+        environment:
+          JEST_JUNIT_OUTPUT: $CIRCLE_TEST_REPORTS/jest/junit.xml

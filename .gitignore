@@ -5,3 +5,4 @@ hs_err_pid*.log
 selenium-debug.log
 coverage/
 npm-debug.log
+junit.xml

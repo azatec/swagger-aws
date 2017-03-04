@@ -52,6 +52,7 @@
     "setupFiles": [
       "./test/setupGlobalEnv.js"
     ],
+    "testResultsProcessor": "jest-junit",
     "transform": {
       "\\.js$": "babel-jest",
       "\\.handlebars": "<rootDir>/test/handlebarsTransformer.js"
@@ -90,6 +91,7 @@
     "handlebars": "4.0.5",
     "handlebars-loader": "^1.4.0",
     "jest": "^19.0.2",
+    "jest-junit": "^1.2.0",
     "jquery": "^1.8.0",
     "lodash": "3.10.1",
     "nightwatch": "^0.9.12",
