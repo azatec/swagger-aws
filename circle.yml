@@ -8,7 +8,7 @@ test:
   pre:
     - mkdir -p $CIRCLE_TEST_REPORTS/jest
   override:
-    - npm test -- --max-parallel 1:
+    - npm test -- --max-parallel 1 -- --maxWorkers=2:
         environment:
           JEST_JUNIT_OUTPUT: $CIRCLE_TEST_REPORTS/jest/junit.xml
     - npm run e2e:headless

@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . /usr/src/swagger-aws
 
-RUN npm run jest && rm -rf coverage junit.xml
+RUN npm run jest -- --maxWorkers=2 && rm -rf coverage junit.xml
 RUN npm run build
 
 EXPOSE 9000

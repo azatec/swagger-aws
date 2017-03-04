@@ -17,7 +17,7 @@
     "selenium:wait": "./test/e2e/wait-for-selenium.sh",
     "serve": "node -e 'require(\"./test/server\").listen(9000)'",
     "start": "npm-run-all build serve",
-    "test": "npm-run-all --parallel lint jest flow"
+    "test": "npm-run-all --parallel lint \"jest -- {1}\" flow"
   },
   "babel": {
     "presets": [
