@@ -1,4 +1,4 @@
-import app from './server';
+import app from '../server';
 
 module.exports = {
   waitForConditionTimeout: 1000,
