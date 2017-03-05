@@ -73,7 +73,7 @@ To build the library, execute `npm run build`, which will build the artifacts
 using [Webpack].
 
 To test the SwaggerUI integration manually, run `npm start` which will launch a
-demo on [http://localhost:9000](http://localhost:9000).
+demo on [http://localhost:8080](http://localhost:8080).
 
 To run tests, run `npm test`. This will lint the code using [ESLint], type-check
 using [Flow] and run a couple of [Jest] tests.

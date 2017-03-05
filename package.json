@@ -16,7 +16,7 @@
     "selenium:docker-compose": "docker-compose -f test/e2e/docker-compose.yml up -d",
     "selenium:wait": "./test/e2e/wait-for-selenium.sh",
     "serve": "node -e 'require(\"./test/server\")(require(\"express\")()).listen(9000)'",
-    "start": "npm-run-all build serve",
+    "start": "webpack-dev-server --env development",
     "test": "npm-run-all --parallel lint \"jest -- {1}\" flow"
   },
   "babel": {
@@ -105,7 +105,8 @@
     "selenium-server-standalone-jar": "^3.1.0",
     "swagger-client": "^2.1.32",
     "swagger-ui": "2.2.10",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
     "aws4": "^1.6.0",
