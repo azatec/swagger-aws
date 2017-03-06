@@ -7,10 +7,42 @@ const setupApp = require('./test/server');
 const srcPath = path.resolve(__dirname, 'src');
 
 module.exports = function buildConfig(env) {
+  /* The rules:
+   *
+   * +-------------+----------+----------+-------------------+--------+----------+
+   * | Build Type  | Minified | Coverage |    Source Map     | Reload | CryptoJS |
+   * +=============+==========+==========+===================+========+==========+
+   * | Production  |    Y     |     N    |    source-map     |    N   |    Y     |
+   * +-------------+----------+----------+-------------------+--------+----------+
+   * | Coverage    |    Y     |     Y    | inline-source-map |    N   |    Y     |
+   * +-------------+----------+----------+-------------------+--------+----------+
+   * | Development |    N     |     N    |  eval-source-map  |    Y   |    N     |
+   * +-------------+----------+----------+-------------------+--------+----------+
+   *
+   * - Any build type which is not 'coverage' or 'development' is 'production'.
+   * - 'coverage' and 'production' are the same, except for source map location
+   *   and coverage annotations.
+   */
+
   env = env || 'production'; // eslint-disable-line no-param-reassign
 
+  const isCoverage = env === 'coverage';
   const isDevelopment = env === 'development';
-  const isProduction = !isDevelopment;
+  const isProduction = !isDevelopment && !isCoverage;
+
+  const minified = isProduction || isCoverage;
+  const coverage = isCoverage;
+  const sourceMap = (() => {
+    if (isCoverage) {
+      return 'inline-source-map';
+    }
+    if (isDevelopment) {
+      return 'eval-source-map';
+    }
+    return 'source-map';
+  })();
+  const reload = isDevelopment;
+  const cryptoJs = !reload;
 
   return {
     context: srcPath,
@@ -26,16 +58,15 @@ module.exports = function buildConfig(env) {
       libraryTarget: 'umd',
       umdNamedDefine: true,
     },
-    devtool: isProduction ? 'source-map' : 'eval-source-map',
+    devtool: sourceMap,
     target: 'web',
 
     resolve: {
       alias: {
         querystring: 'querystring-browser',
-        /* `webpack-dev-server` needs the 'real' crypto */
-        crypto: isProduction
-          ? path.resolve(srcPath, 'authorization/aws4-crypto-js.js')
-          : 'crypto',
+        /* `webpack-dev-server` 'inline' reload needs the 'real' crypto */
+        crypto: cryptoJs ? path.resolve(srcPath, 'authorization/aws4-crypto-js.js')
+                         : 'crypto',
       },
     },
 
@@ -84,7 +115,14 @@ module.exports = function buildConfig(env) {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: 'babel-loader',
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                plugins: coverage ? ['istanbul'] : [],
+              },
+            },
+          ],
         },
         {
           test: /\.handlebars$/,
@@ -121,7 +159,7 @@ module.exports = function buildConfig(env) {
       new webpack.optimize.CommonsChunkPlugin({
         name: ['Ui', 'Authorization'],
       }),
-    ].concat(!isProduction ? [] : [
+    ].concat(!minified ? [] : [
       new webpack.optimize.UglifyJsPlugin({
         compress: {
           warnings: false,
@@ -134,6 +172,9 @@ module.exports = function buildConfig(env) {
     ]),
 
     performance: {
+      /* Only really care for 'production' builds: others include stuff we
+       * shouldn't account for size-wise (hot reload, coverage annotations,...)
+       */
       hints: isProduction ? 'error' : false,
       /* Bail out when a bundle would go past 100kB. At the time of writing we're
        * at 54kB for `Authorization` and 7.4kB for `Ui`, so this value should be
@@ -144,7 +185,7 @@ module.exports = function buildConfig(env) {
 
     devServer: {
       hot: false,
-      inline: !isProduction,
+      inline: reload,
       setup: app => setupApp(app, {
         serveDist: false,
       }),
