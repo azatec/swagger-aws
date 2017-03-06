@@ -1,4 +1,8 @@
+import { afterScenario } from '../globals';
+
 export default {
+  after: afterScenario,
+
   Login: (client) => {
     client
       .url(client.launchUrl ? client.launchUrl : client.globals.launchUrl);
@@ -47,7 +51,5 @@ export default {
       .openDialog();
 
     loginPage.expect.element('@authorizeDialog').text.to.contain('theKeyId');
-
-    client.end();
   },
 };
