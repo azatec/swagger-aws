@@ -59,4 +59,36 @@ describe('AWS4Authorization', () => {
       'X-Amz-Date': mockXAmzDateHeader,
     });
   });
+
+  it('doesn\'t set a `Host` header if none is given', () => {
+    const headers = {};
+    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key');
+
+    const params = {
+      method: 'GET',
+      url: mockUrl,
+      headers,
+    };
+
+    signer.apply(params);
+
+    expect(headers.Host).toBeUndefined();
+  });
+
+  it('keeps the `Host` header if one is given', () => {
+    const headers = {
+      Host: 'scality.com',
+    };
+    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key');
+
+    const params = {
+      method: 'GET',
+      url: mockUrl,
+      headers,
+    };
+
+    signer.apply(params);
+
+    expect(headers.Host).toBe('scality.com');
+  });
 });
