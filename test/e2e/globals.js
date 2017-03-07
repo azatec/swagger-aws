@@ -106,7 +106,7 @@ module.exports = {
   afterScenario: (browser, done) => {
     const cb = () => browser.end(done);
 
-    if (coverage) {
+    if (coverage && browser.sessionId) {
       storeCoverage(browser, cb);
     } else {
       cb();
