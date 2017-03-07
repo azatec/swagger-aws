@@ -11,4 +11,5 @@ test:
     - npm test -- --max-parallel 1 -- --maxWorkers=2:
         environment:
           JEST_JUNIT_OUTPUT: $CIRCLE_TEST_REPORTS/jest/junit.xml
+    - npm run selenium:docker-compose:up
     - npm run e2e:headless
