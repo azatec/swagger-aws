@@ -108,12 +108,10 @@ module.exports = {
   afterScenario: (browser, done) => {
     if (coverage) {
       storeCoverage(browser, () => {
-        browser.end();
-        done();
+        browser.end(done);
       });
     } else {
-      browser.end();
-      done();
+      browser.end(done);
     }
   },
 };
