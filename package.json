@@ -16,6 +16,7 @@
     "e2e:headless": "cross-env E2E_HEADLESS=1 npm run nightwatch:chrome",
     "poste2e:headless": "npm run selenium:docker-compose:stop",
     "flow": "flow",
+    "flow:stop": "flow stop",
     "istanbul:report": "istanbul report",
     "jest": "jest",
     "lint": "eslint .",
