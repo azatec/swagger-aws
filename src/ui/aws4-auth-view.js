@@ -26,6 +26,7 @@ const AWS4AuthView = Backbone.View.extend({
     const val = $el.val();
     const name = $el.prop('name');
 
+    /* istanbul ignore else: Nothing to test */
     if (val) {
       $el.removeClass('error');
     }

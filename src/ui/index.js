@@ -31,6 +31,7 @@ function patchAuthsCollection() {
   SwaggerUi.Collections.AuthsCollection.prototype.handleOne = function handleOne(model, ...rest) {
     let result = null;
 
+    /* istanbul ignore else: Hard to cover without hacking SwaggerUI */
     if (!(model instanceof Backbone.Model)) {
       switch (model.type) {
         case 'x-aws4':
@@ -61,6 +62,7 @@ function patchAuthsCollection() {
     const origResults = origParse.call(this, others, ...rest);
 
     let authz = {};
+    /* istanbul ignore else: This is always the case, and taken from SwaggerUI */
     if (typeof window.swaggerUi !== 'undefined') {
       authz = Object.assign({}, window.swaggerUi.api.clientAuthorizations.authz);
     }
