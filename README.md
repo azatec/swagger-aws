@@ -9,8 +9,9 @@ releases of this library per micro release of SwaggerUI (which is, hopefully,
 sufficient) whilst still being compatible with [Semver](http://semver.org)
 (which doesn't provide a fourth version number).
 
-## CI Status
+## CI & Coverage
 [![CircleCI](https://circleci.com/gh/scality/swagger-aws.svg?style=svg)](https://circleci.com/gh/scality/swagger-aws)
+[![Coverage Status](https://coveralls.io/repos/github/scality/swagger-aws/badge.svg?branch=master)](https://coveralls.io/github/scality/swagger-aws?branch=master)
 
 ## Usage
 ### Declaring AWS4 authorization support
