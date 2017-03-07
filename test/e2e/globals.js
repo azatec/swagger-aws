@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import express from 'express';
-import mkdirp from 'mkdirp';
+import * as mkdirp from 'mkdirp';
 import sanitizeFilename from 'sanitize-filename';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
@@ -18,44 +18,42 @@ if (coverage && headless) {
   throw new Error('Coverage and headless mode are mutually exclusive');
 }
 
-const storeCoverage = (browser, done) => {
+const storeCoverage = (browser, done) =>
   browser.execute(
     coverageField => window[coverageField],
     ['__coverage__'],
     (result) => {
-      if (result.status !== 0 || result.value === null) {
-        console.log('Failed to retrieve coverage from browser', result);
-        done();
-        return;
-      }
+      try {
+        if (result.status !== 0 || result.value === null) {
+          throw new Error('Failed to retrieve coverage from browser');
+        }
 
-      const pathParts = [
-        'coverage',
-        'e2e',
+        const pathParts = [
+          'coverage',
+          'e2e',
         // eslint-disable-next-line no-underscore-dangle
-        process.env.__NIGHTWATCH_ENV_KEY || 'unknown',
-        browser.currentTest.module || '',
-        browser.currentTest.group || '',
-        browser.currentTest.naame || '',
-      ]
+          process.env.__NIGHTWATCH_ENV_KEY || 'unknown',
+          browser.currentTest.module || '',
+          browser.currentTest.group || '',
+          browser.currentTest.naame || '',
+        ]
         .map(s => s.replace(/\s/gi, '-'))
         .map(sanitizeFilename);
 
-      const folder = path.join.apply(null, pathParts);
-      const filename = 'coverage.json';
+        const folder = path.join.apply(null, pathParts);
+        const filename = 'coverage.json';
 
-      mkdirp(folder, (exc) => {
-        if (exc) {
-          console.log(`Unable to create coverage directory '${folder}'`, exc);
-        } else {
-          const filePath = path.join(folder, filename);
-          fs.writeFileSync(filePath, JSON.stringify(result.value));
-        }
+        mkdirp.sync(folder);
 
+        const filePath = path.join(folder, filename);
+        fs.writeFileSync(filePath, JSON.stringify(result.value));
+      } catch (exc) {
+        console.log('Error while storing coverage results', exc);
+      } finally {
         done();
-      });
+      }
     });
-};
+
 
 module.exports = {
   waitForConditionTimeout: 1000,
@@ -106,12 +104,12 @@ module.exports = {
   },
 
   afterScenario: (browser, done) => {
+    const cb = () => browser.end(done);
+
     if (coverage) {
-      storeCoverage(browser, () => {
-        browser.end(done);
-      });
+      storeCoverage(browser, cb);
     } else {
-      browser.end(done);
+      cb();
     }
   },
 };

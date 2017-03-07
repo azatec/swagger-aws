@@ -16,6 +16,16 @@ const loginCommands = {
       .setValue('@keyInput', key)
       .click('@authorizeButton');
   },
+  basicLogin(username, password) {
+    return this
+      .assert.visible('@usernameInput')
+      .assert.visible('@passwordInput')
+      .assert.visible('@authorizeButton')
+
+      .setValue('@usernameInput', username)
+      .setValue('@passwordInput', password)
+      .click('@basicAuthorizeButton');
+  },
   closeDialog() {
     return this
       .assert.visible('@cancelButton')
@@ -40,6 +50,16 @@ module.exports = {
     },
     authorizeButton: {
       selector: '(//button[@class="auth__button auth_submit__button"])[2]',
+      locateStrategy: 'xpath',
+    },
+    usernameInput: {
+      selector: 'input[name="username"]',
+    },
+    passwordInput: {
+      selector: 'input[name="password"]',
+    },
+    basicAuthorizeButton: {
+      selector: '(//button[@class="auth__button auth_submit__button"])[1]',
       locateStrategy: 'xpath',
     },
     cancelButton: {
