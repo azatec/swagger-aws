@@ -9,6 +9,23 @@ describe('createHmac', () => {
 
     expect(createHmac('sha256', key).update(message, 'utf8').digest()).toBe(result);
   });
+
+  it('only supports SHA256', () => {
+    expect(() => createHmac('sha1', 'key')).toThrowError(/Unsupported algorithm/);
+  });
+
+  it('only accepts UTF8-encoded input', () => {
+    const hasher = createHmac('sha256', 'key');
+
+    expect(() => hasher.update('foo', 'ascii')).toThrowError(/Unsupported encoding/);
+  });
+
+  it('can only output hex digests', () => {
+    const hasher = createHmac('sha256', 'key');
+    hasher.update('foo');
+
+    expect(() => hasher.digest('binary')).toThrowError(/Unsupported encoding/);
+  });
 });
 
 describe('createHash', () => {
@@ -17,5 +34,22 @@ describe('createHash', () => {
     const result = '36bbe50ed96841d10443bcb670d6554f0a34b761be67ec9c4a8ad2c0c44ca42c';
 
     expect(createHash('sha256').update(message, 'utf8').digest()).toBe(result);
+  });
+
+  it('only supports SHA256', () => {
+    expect(() => createHash('sha1')).toThrowError(/Unsupported algorithm/);
+  });
+
+  it('only accepts UTF8-encoded input', () => {
+    const hasher = createHash('sha256');
+
+    expect(() => hasher.update('foo', 'ascii')).toThrowError(/Unsupported encoding/);
+  });
+
+  it('can only output hex digests', () => {
+    const hasher = createHash('sha256');
+    hasher.update('foo');
+
+    expect(() => hasher.digest('binary')).toThrowError(/Unsupported encoding/);
   });
 });

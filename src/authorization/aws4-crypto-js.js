@@ -15,15 +15,11 @@ type HashState = {
   finalize(): HashResult;
 }
 
-type HashAlgorithm = {
-  create(): HashState;
-};
-
-class Hmac {
+class HashInterface {
   state: HashState;
 
-  constructor(algorithm: HashAlgorithm, key: string) {
-    this.state = algo.HMAC.create(algorithm, key);
+  constructor(state: HashState) {
+    this.state = state;
   }
 
   update(string: string, encoding: ?string) {
@@ -45,45 +41,18 @@ class Hmac {
   }
 }
 
-export function createHmac(algorithm: string, key: string): Hmac {
+export function createHmac(algorithm: string, key: string): HashInterface {
   if (algorithm !== 'sha256') {
     throw new Error(`Unsupported algorithm: ${algorithm}`);
   }
 
-  return new Hmac(algo.SHA256, key);
+  return new HashInterface(algo.HMAC.create(algo.SHA256, key));
 }
 
-
-class Hash {
-  state: HashState;
-
-  constructor(algorithm: HashAlgorithm) {
-    this.state = algorithm.create();
-  }
-
-  update(string: string, encoding: ?string) {
-    if (typeof encoding !== 'undefined' && encoding !== null && encoding !== 'utf8') {
-      throw new Error(`Unsupported encoding: ${encoding}`);
-    }
-
-    this.state.update(enc.Utf8.parse(string));
-
-    return this;
-  }
-
-  digest(encoding: ?string) {
-    if (typeof encoding !== 'undefined' && encoding !== null && encoding !== 'hex') {
-      throw new Error(`Unsupported encoding: ${encoding}`);
-    }
-
-    return this.state.finalize().toString(enc.Hex);
-  }
-}
-
-export function createHash(algorithm: string): Hash {
+export function createHash(algorithm: string): HashInterface {
   if (algorithm !== 'sha256') {
     throw new Error(`Unsupported algorithm: ${algorithm}`);
   }
 
-  return new Hash(algo.SHA256);
+  return new HashInterface(algo.SHA256.create());
 }
