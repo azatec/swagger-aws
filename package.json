@@ -16,7 +16,7 @@
     "flow": "flow",
     "jest": "jest",
     "lint": "eslint .",
-    "nightwatch": "nightwatch -e chrome,firefox",
+    "nightwatch": "npm run nightwatch:chrome",
     "nightwatch:chrome": "nightwatch -e chrome",
     "nightwatch:firefox": "nightwatch -e firefox",
     "selenium:docker-compose:stop": "docker-compose -f test/e2e/docker-compose.yml stop",
