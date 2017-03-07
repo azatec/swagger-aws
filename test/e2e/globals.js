@@ -14,10 +14,6 @@ import setupApp from '../server';
 const coverage = typeof process.env.E2E_COVERAGE !== 'undefined';
 const headless = typeof process.env.E2E_HEADLESS !== 'undefined';
 
-if (coverage && headless) {
-  throw new Error('Coverage and headless mode are mutually exclusive');
-}
-
 const storeCoverage = (browser, done) =>
   browser.execute(
     coverageField => window[coverageField],

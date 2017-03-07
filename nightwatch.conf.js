@@ -2,6 +2,7 @@
 
 require('babel-core/register');
 
+const coverage = typeof process.env.E2E_COVERAGE !== 'undefined';
 const headless = typeof process.env.E2E_HEADLESS !== 'undefined';
 const reports =
   process.env.CIRCLE_TEST_REPORTS
@@ -30,7 +31,7 @@ module.exports = {
       /* In non-headless mode, the URL will be set in the `before` handler in
        * `globals.js`, depending on the port the Express server gets started on
        */
-      launch_url: headless ? 'http://swagger-aws:9000' : null,
+      launch_url: headless ? `http://swagger-aws:${coverage ? 9001 : 9000}` : null,
       screenshots: {
         enabled: true,
         path: `${reports}/screenshots`,
