@@ -1,3 +1,5 @@
+// @flow
+
 import Backbone from 'backbone';
 import Handlebars from 'handlebars';
 import $ from 'jquery';

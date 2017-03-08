@@ -1,3 +1,4 @@
+// @flow
 /* eslint-disable no-console, strict */
 
 'use strict';
@@ -32,34 +33,41 @@ const patchedIndex = index.replace(
   ].join('\n'))
   .replace(baseUrl, '/api/swagger.json');
 
-module.exports = function setupApp(app, options) {
+/* :: type Options = {
+  serveDist: boolean,
+};
+*/
+
+module.exports = function setupApp(app/* : express$Application*/, options/* : Options*/) {
   options = options || {}; // eslint-disable-line no-param-reassign
 
   const serveDist = typeof options.serveDist === 'undefined' ? true : options.serveDist;
 
-  app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Headers', 'Authorization, X-Amz-Date');
-    next();
-  });
+  app.use(
+    (req/* : express$Request */, res/* : express$Response*/, next/* : express$NextFunction */) => {
+      res.set('Access-Control-Allow-Origin', '*');
+      res.set('Access-Control-Allow-Headers', 'Authorization, X-Amz-Date');
+      next();
+    });
 
-  app.get('/api/swagger.json', (req, res) => {
+  app.get('/api/swagger.json', (req/* : express$Request*/, res/* : express$Response*/) => {
     res.json(swagger);
   });
 
-  app.get('/api/account', (req, res) => {
-    if (typeof req.get('Authorization') === 'undefined') {
+  app.get('/api/account', (req/* : express$Request */, res/* : express$Response */) => {
+    const auth = req.get('Authorization');
+
+    if (typeof auth === 'undefined') {
       console.log('Missing authorization');
       res.status(401).json({
         code: 401,
         message: 'No authorization provided',
       });
     } else {
-      const auth = req.get('Authorization');
       console.log(`Successful request: ${auth}`);
 
       const handleBasicAuth = () => {
-        const val = req.get('Authorization').split(/ /)[1];
+        const val = auth.split(/ /)[1];
         const orig = Buffer.from(val, 'base64').toString();
         return orig.split(':')[0];
       };
@@ -99,7 +107,7 @@ module.exports = function setupApp(app, options) {
     }
   });
 
-  app.get('/', (req, res) => {
+  app.get('/', (req/* : express$Request */, res/* : express$Response */) => {
     res.set('Content-Type', 'text/html');
     res.send(patchedIndex);
   });

@@ -1,3 +1,5 @@
+// @flow
+
 import AWS4AuthModel from './aws4-auth-model';
 
 describe('AWS4AuthModel', () => {

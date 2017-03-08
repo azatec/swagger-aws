@@ -1,3 +1,5 @@
+// @flow
+
 import { AWS4Authorization } from '.';
 
 describe('AWS4Authorization', () => {
