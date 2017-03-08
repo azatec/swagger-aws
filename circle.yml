@@ -4,6 +4,18 @@ machine:
   services:
     - docker
 
+dependencies:
+  pre:
+    - mkdir -p ~/docker
+    - if test -s ~/docker/images.tar.bz2; then bzip2 -d -c ~/docker/images.tar.bz2 | docker load; else echo 'Docker images not found, not preloaded'; fi
+    - docker images
+    - npm run selenium:docker-compose:build
+  post:
+    - docker save node:alpine e2e_swagger-aws | bzip2 -9 > ~/images.tar.bz2.tmp && mv ~/images.tar.bz2.tmp ~/docker/images.tar.bz2:
+        background: true
+  cache_directories:
+    - "~/docker"
+
 test:
   pre:
     - mkdir -p $CIRCLE_TEST_REPORTS/jest

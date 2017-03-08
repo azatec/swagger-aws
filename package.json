@@ -26,6 +26,7 @@
     "nightwatch": "npm run nightwatch:chrome",
     "nightwatch:chrome": "nightwatch -e chrome",
     "nightwatch:firefox": "nightwatch -e firefox",
+    "selenium:docker-compose:build": "docker-compose -f test/e2e/docker-compose.yml build",
     "selenium:docker-compose:stop": "docker-compose -f test/e2e/docker-compose.yml stop",
     "selenium:docker-compose:up": "docker-compose -f test/e2e/docker-compose.yml up -d",
     "selenium:wait": "./test/e2e/wait-for-selenium.sh",
