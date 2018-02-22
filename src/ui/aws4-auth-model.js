@@ -1,13 +1,17 @@
 // @flow
+
+/* Modified by Luca Tamnburo (luca.tamburo@azatec.com) */
+
 import Backbone from 'backbone';
 
 const AWS4AuthModel = Backbone.Model.extend({
   defaults: {
     'x-in': 'header',
-    'x-service': null,
-    'x-region': null,
+    'x-service': 'execute-api',
+    region: null,
     keyId: null,
     key: null,
+    sessionToken: null,
   },
 
   initialize: function initialize() {
@@ -16,7 +20,7 @@ const AWS4AuthModel = Backbone.Model.extend({
   },
 
   validate: function validate() {
-    const valid = !!this.get('x-service') && !!this.get('x-region') && !!this.get('keyId') && !!this.get('key');
+    const valid = !!this.get('x-service') && !!this.get('region') && !!this.get('keyId') && !!this.get('key') && !!this.get('sessionToken');
     this.set('valid', valid);
     return valid;
   },

@@ -78,14 +78,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Scality/swagger-aws.git"
+    "url": "git+https://github.com/azatec/swagger-aws.git"
   },
   "author": "Nicolas Trangez <nicolas.trangez@scality.com>",
+  "contributors": [{
+    "name": "Luca Tamburo",
+    "email": "luca.tamburo@azatec.com",
+    "url": "https://www.azatec.com"
+  }],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Scality/swagger-aws/issues"
+    "url": "https://github.com/azatec/swagger-aws/issues"
   },
-  "homepage": "https://github.com/Scality/swagger-aws#readme",
+  "homepage": "https://github.com/azatec/swagger-aws#readme",
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",

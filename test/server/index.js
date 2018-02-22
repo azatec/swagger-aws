@@ -1,6 +1,8 @@
 // @flow
 /* eslint-disable no-console, strict */
 
+/* Modified by Luca Tamnburo (luca.tamburo@azatec.com) */
+
 'use strict';
 
 const fs = require('fs');
@@ -38,19 +40,19 @@ const patchedIndex = index.replace(
 };
 */
 
-module.exports = function setupApp(app/* : express$Application*/, options/* : Options*/) {
+module.exports = function setupApp(app/* : express$Application  */, options/* : Options */) {
   options = options || {}; // eslint-disable-line no-param-reassign
 
   const serveDist = typeof options.serveDist === 'undefined' ? true : options.serveDist;
 
   app.use(
-    (req/* : express$Request */, res/* : express$Response*/, next/* : express$NextFunction */) => {
+    (req/* : express$Request */, res/* : express$Response */, next/* : express$NextFunction */) => {
       res.set('Access-Control-Allow-Origin', '*');
       res.set('Access-Control-Allow-Headers', 'Authorization, X-Amz-Date');
       next();
     });
 
-  app.get('/api/swagger.json', (req/* : express$Request*/, res/* : express$Response*/) => {
+  app.get('/api/swagger.json', (req/* : express$Request */, res/* : express$Response */) => {
     res.json(swagger);
   });
 

@@ -1,4 +1,5 @@
 // @flow
+/* Modified by Luca Tamnburo (luca.tamburo@azatec.com) */
 import SwaggerClient from 'swagger-client';
 
 import mockSwaggerSpec from '../../../test/server/swagger.json';
@@ -7,7 +8,7 @@ import { AWS4Authorization } from '..';
 
 const mockSwaggerUrl = 'http://localhost:9000/api/swagger.json';
 const mockGetAccountUrl = 'http://localhost:9000/api/account';
-const schemeName = 'aws4';
+const schemeName = 'sigv4';
 
 jest.mock('superagent', () => ({
   get: jest.fn((url) => {
@@ -67,10 +68,10 @@ describe('SwaggerClient', () => {
     .then((client) => {
       expect(client.securityDefinitions[schemeName]).toEqual(
         expect.objectContaining({
-          type: 'x-aws4',
-          'x-in': 'header',
-          'x-service': expect.any(String),
-          'x-region': expect.any(String),
+          type: 'apiKeyAws4',
+          in: 'header',
+          name: 'Authorization',
+          'x-amazon-apigateway-authtype': 'awsSigv4',
         }),
       );
     }));
@@ -80,14 +81,16 @@ describe('SwaggerClient', () => {
     usePromise: true,
   })
     .then((client) => {
+      const sessionToken = 'theSessionToken';
       const keyId = 'theKeyId';
       const key = 'theKey';
+      const region = 'eu-west-1';
       const aws4 = client.securityDefinitions[schemeName];
 
       client.clientAuthorizations.add(
         schemeName,
         new AWS4Authorization(
-          aws4['x-service'], aws4['x-region'], aws4['x-in'], keyId, key));
+          'execute-api', region, aws4.in, keyId, key, sessionToken));
       return client;
     })
     .then(client => client.Account.get_account())

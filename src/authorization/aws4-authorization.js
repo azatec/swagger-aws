@@ -1,4 +1,5 @@
 // @flow
+/* Modified by Luca Tamnburo (luca.tamburo@azatec.com) */
 
 import { sign } from 'aws4';
 import { parse } from 'url';
@@ -15,16 +16,18 @@ export default class AWS4AAuthorization {
   region: string;
   keyId: string;
   key: string;
+  sessionToken: string;
 
-  constructor(service: string, region: string, type: 'header', keyId: string, key: string) {
+  constructor(service: string, region: string, type: 'header', keyId: string, key: string, sessionToken: string) {
     if (type !== 'header') {
       throw Error('Only header signatures supported');
     }
 
-    this.service = service;
+    this.service = 'execute-api';
     this.region = region;
     this.keyId = keyId;
     this.key = key;
+    this.sessionToken = sessionToken;
   }
 
   apply(obj: Request) {
@@ -49,6 +52,7 @@ export default class AWS4AAuthorization {
     }, {
       accessKeyId: this.keyId,
       secretAccessKey: this.key,
+      sessionToken: this.sessionToken,
     });
 
     delete obj.headers.Host; // eslint-disable-line no-param-reassign

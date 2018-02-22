@@ -17,12 +17,11 @@
             "type": "basic",
             "description": "Basic HTTP authentication"
         },
-        "aws4": {
-            "type": "x-aws4",
-            "description": "AWS4 signature authentication",
-            "x-in": "header",
-            "x-service": "demo",
-            "x-region": "be-east-1"
+        "sigv4": {
+            "type": "apiKeyAws4",
+            "name": "Authorization",
+            "in": "header",
+            "x-amazon-apigateway-authtype": "awsSigv4"
         }
     },
     "paths": {
@@ -35,7 +34,7 @@
                         "basic": []
                     },
                     {
-                        "aws4": []
+                        "sigv4": []
                     }
                 ],
                 "tags": [

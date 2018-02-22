@@ -1,32 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+// Modified by Luca Tamnburo (luca.tamburo@azatec.com)
+
 exports[`AWS4AuthView should not regress 1`] = `
 "<div class=\\"key_input_container\\">
   <h3 class=\\"auth__title\\">AWS4 authorization</h3>
   <div class=\\"auth__description\\"></div>
   <div>
-    <!--
-    <div class=\\"key_auth__field\\">
-      <span class=\\"key_auth__label\\">in:</span>
-      <span class=\\"key_auth__value\\">header</span>
-    </div>
-    -->
-    <div class=\\"key_auth__field\\">
-      <span class=\\"key_auth__label\\">Service:</span>
-      <span class=\\"key_auth__value\\">tests</span>
-    </div>
     <div class=\\"key_auth__field\\">
       <span class=\\"key_auth__label\\">Region:</span>
-      <span class=\\"key_auth__value\\">be-west-1</span>
+      <select required=\\"\\" class=\\"auth_select auth_input select_aws4_region_entry\\" name=\\"region\\">
+        <option value=\\"\\">Select a region</option>
+        <option value=\\"us-east-2\\">US East (Ohio)</option>
+        <option value=\\"us-east-1\\">US East (N. Virginia)</option>
+        <option value=\\"us-west-1\\">US West (N. California)</option>
+        <option value=\\"us-west-2\\">US West (Oregon)</option>
+        <option value=\\"ap-south-1\\">Asia Pacific (Mumbai)</option>
+        <option value=\\"ap-northeast-2\\">Asia Pacific (Seoul)</option>
+        <option value=\\"ap-northeast-3\\">Asia Pacific (Osaka-Local)</option>
+        <option value=\\"ap-southeast-1\\">Asia Pacific (Singapore)</option>
+        <option value=\\"ap-southeast-2\\">Asia Pacific (Sydney)</option>
+        <option value=\\"ap-northeast-1\\">Asia Pacific (Tokyo)</option>
+        <option value=\\"ca-central-1\\">Canada (Central)</option>
+        <option value=\\"cn-north-1\\">China (Beijing)</option>
+        <option value=\\"eu-central-1\\">EU (Frankfurt)</option>
+        <option value=\\"eu-west-1\\">EU (Ireland)</option>
+        <option value=\\"eu-west-2\\">EU (London)</option>
+        <option value=\\"eu-west-3\\">EU (Paris)</option>
+        <option value=\\"sa-east-1\\">South America (São Paulo)</option>
+      </select>
     </div>
     <div>
-      <span class=\\"key_auth__label\\">Key ID:</span>
-        <input required=\\"\\" placeholder=\\"Key ID\\" class=\\"auth_input input_aws4_keyId_entry\\" name=\\"keyId\\" type=\\"text\\">
+      <span class=\\"key_auth__label\\">Access Key:</span>
+      <input required=\\"\\" placeholder=\\"Access Key\\" class=\\"auth_input input_aws4_keyId_entry\\" name=\\"keyId\\" type=\\"text\\">
     </div>
-      <div>
-        <span class=\\"key_auth__label\\">Key:</span>
-        <input required=\\"\\" placeholder=\\"Key\\" class=\\"auth_input input_aws4_key_entry\\" name=\\"key\\" type=\\"password\\">
-      </div>
+    <div>
+      <span class=\\"key_auth__label\\">Secret Access Key:</span>
+      <input required=\\"\\" placeholder=\\"Secret Access Key\\" class=\\"auth_input input_aws4_key_entry\\" name=\\"key\\" type=\\"password\\">
+    </div>
+    <div>
+      <span class=\\"sessionToken_auth__label\\">Session Token:</span>
+      <input required=\\"\\" placeholder=\\"Session Token\\" class=\\"auth_input input_aws4_sessionToken_entry\\" name=\\"sessionToken\\" type=\\"text\\">
+    </div>
   </div>
 </div>
 "

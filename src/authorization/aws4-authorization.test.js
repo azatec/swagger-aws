@@ -1,5 +1,7 @@
 // @flow
 
+/* Modified by Luca Tamnburo (luca.tamburo@azatec.com) */
+
 import { sign } from 'aws4';
 import { parse } from 'url';
 
@@ -27,12 +29,12 @@ sign.mockImplementation((obj) => {
 describe('AWS4Authorization', () => {
   it('only supports "header" authentication', () => {
     // $FlowIgnore This explicitly tests handling of an invalid 'type'
-    const construct = () => new AWS4Authorization('service', 'region', 'query', 'keyId', 'key');
+    const construct = () => new AWS4Authorization('service', 'region', 'query', 'keyId', 'key', 'sessionToken');
     expect(construct).toThrowError(/header signatures/);
   });
 
   it('calls `aws4.sign` upon application', () => {
-    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key');
+    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key', 'sessionToken');
     signer.apply({
       method: 'GET',
       url: mockUrl,
@@ -44,7 +46,7 @@ describe('AWS4Authorization', () => {
 
   it('sets headers in the passed object\'s `headers` object', () => {
     const headers = {};
-    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key');
+    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key', 'sessionToken');
 
     const params = {
       method: 'GET',
@@ -62,7 +64,7 @@ describe('AWS4Authorization', () => {
 
   it('doesn\'t set a `Host` header if none is given', () => {
     const headers = {};
-    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key');
+    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key', 'sessionToken');
 
     const params = {
       method: 'GET',
@@ -79,7 +81,7 @@ describe('AWS4Authorization', () => {
     const headers = {
       Host: 'scality.com',
     };
-    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key');
+    const signer = new AWS4Authorization('service', 'region', 'header', 'keyId', 'key', 'sessionToken');
 
     const params = {
       method: 'GET',

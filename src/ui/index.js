@@ -12,11 +12,11 @@ function patchAuthView() {
 
   SwaggerUi.Views.AuthView.prototype.authorize = function authorize(...rest) {
     this.authsCollectionView.collection.forEach(function addClientAuthorization(auth) {
-      const type = auth.get('type');
+      const type = auth.get('x-amazon-apigateway-authtype');
 
-      if (type === 'x-aws4') {
+      if (type === 'awsSigv4') {
         const aws4Auth = new AWS4Authorization(
-          auth.get('x-service'), auth.get('x-region'), auth.get('x-in'), auth.get('keyId'), auth.get('key'));
+          auth.get('x-service'), auth.get('region'), auth.get('in'), auth.get('keyId'), auth.get('key'), auth.get('sessionToken'));
         this.router.api.clientAuthorizations.add(auth.get('title'), aws4Auth);
       }
     }, this);
@@ -33,13 +33,10 @@ function patchAuthsCollection() {
 
     /* istanbul ignore else: Hard to cover without hacking SwaggerUI */
     if (!(model instanceof Backbone.Model)) {
-      switch (model.type) {
-        case 'x-aws4':
-          result = new AWS4AuthModel(model);
-          break;
-        default:
-          result = origHandleOne.call(this, model, ...rest);
-          break;
+      if (model.vendorExtensions !== undefined && model.vendorExtensions['x-amazon-apigateway-authtype'] === 'awsSigv4') {
+        result = new AWS4AuthModel(model);
+      } else {
+        result = origHandleOne.call(this, model, ...rest);
       }
     }
 
@@ -52,7 +49,7 @@ function patchAuthsCollection() {
     const others = {};
 
     _.each(data, (value, key) => {
-      if (value.type === 'x-aws4') {
+      if (value.vendorExtensions !== undefined && value.vendorExtensions['x-amazon-apigateway-authtype'] === 'awsSigv4') {
         aws4[key] = value;
       } else {
         others[key] = value;
@@ -76,8 +73,10 @@ function patchAuthsCollection() {
         _.extend(auth, {
           isLogout: true,
           valid: true,
+          region: authz[name].region,
           keyId: authz[name].keyId,
           key: authz[name].key,
+          sessionToken: authz[name].sessionToken,
         });
       }
 
@@ -93,9 +92,9 @@ function patchAuthsCollectionView() {
 
   SwaggerUi.Views.AuthsCollectionView.prototype.renderOneAuth =
     function renderOneAuth(authModel, ...rest) {
-      const type = authModel.get('type');
+      const type = (authModel.get('x-amazon-apigateway-authtype') === undefined) ? authModel.get('type') : authModel.get('x-amazon-apigateway-authtype');
 
-      if (type === 'x-aws4') {
+      if (type === 'awsSigv4') {
         const authView = new AWS4AuthView({
           model: authModel,
           router: this.router,
